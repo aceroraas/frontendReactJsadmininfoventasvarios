@@ -108,11 +108,11 @@ function Items() {
           </div>
           <div className="search-category">
             <select id="thecategory">
-              <option selected value="all">
+              <option selected defaultValue="all">
                 Todas las categorias
               </option>
               {categories?.map((e) => {
-                return <option value={e.id}>{e.category_name}</option>;
+                return <option key={e.id} defaultValue={e.id}>{e.category_name}</option>;
               })}
             </select>
           </div>

@@ -5,24 +5,28 @@ import Bar from "../../componente/bar/bar";
 import Goback from "../../componente/goback/goback";
 import Nav from "../../componente/nav/nav";
 const CardItem = ({ props }) => {
-  let img = JSON.parse(props.url_images).img_one;
-  return (
-    <>
-      <div className="base-card-item">
-        <div className="card-item-all">
-          <div className="base-card-img">
-            <img src={img} alt={props.title} />
-          </div>
-          <div className="card-item-title">
-            <h4>{props.title}</h4>
-          </div>
-          <div className="card-item-price">
-            <p>$ {props.price}</p>
+  if (props) {
+    let img = JSON.parse(props.url_images).img_one;
+    return (
+      <>
+        <div className="base-card-item">
+          <div className="card-item-all">
+            <div className="base-card-img">
+              <img src={img} alt={props.title} />
+            </div>
+            <div className="card-item-title">
+              <h4>{props.title}</h4>
+            </div>
+            <div className="card-item-price">
+              <p>$ {props.price}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return <h2>cargando..</h2>;
+  }
 };
 function EditItem() {
   const [item, setItem] = useState({});
@@ -127,7 +131,7 @@ function EditItem() {
           </div>
           <div className="base-edit-right">
             <div className="card-background">
-             <CardItem props={item} />
+              <CardItem props={item} />
             </div>
           </div>
           <div className="bottom">
