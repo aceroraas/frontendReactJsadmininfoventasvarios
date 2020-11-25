@@ -1,0 +1,126 @@
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+}
+.search-input,
+.search-category,
+.search-btn,
+.base-search-btn {
+  float: left;
+}
+.search-input input {
+    box-shadow: 0px 2px 1px 0px gray;
+    height: 21px;
+    border: solid 2px;
+    outline: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #266f94;
+    padding: 7px 0;
+    background: transparent;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.search-input input:focus {
+    color: #ec6f18;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 7px 0px;
+    border: solid 2px;
+}
+.search-category select {
+    box-shadow: 0px 2px 1px 0px gray;
+    height: 39px;
+    margin-left: -1.5px;
+}
+.search-btn a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 1px 0px gray;
+    background-color: #ec6f18;
+    padding: 9px 30px;
+    margin-left: -1px;
+    color: white;
+    border-radius: 0px 10px 10px 0px;
+}
+.search-btn a:active {
+    padding: 7px 30px;
+    background-color: #266f94;
+}
+.search-btn a:hover {
+    color: white;
+    background-color: #266f94;
+}
+.search-btn a svg{
+height: 21px;
+}
+.base-search-btn a {
+    box-shadow: 0px 2px 1px 0px gray;
+    color: white;
+    border-radius: 10px;
+    padding: 9px 30px;
+    background-color: #266f94;
+    margin-left: 30px;
+}
+.base-search-btn a:active {
+    padding: 7px 30px;
+    background-color: #ec6f18;
+}
+.base-search-btn a:hover {
+    color: white;
+    background-color: #184a63;
+}
+
+
+.base-page-item{
+    margin-left: 72px;
+    width: auto;
+}
+.base-card-item{
+    float: left;
+    height: 291px;
+    width: 191px;
+    margin:10px;
+}
+
+.card-item-all{
+    background-color: white;
+    box-shadow: 0px 1px 2px 2px grey;
+    text-align: center;
+    display: inline-block;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.base-card-img img{
+    border-radius: 10px 10px 0px 0px;
+    height: 40%;
+    width:100%;
+    object-fit: cover;
+}
+
+.card-item-title{
+    text-align: left;
+    margin-top: -14px;
+    margin-left: 5px;
+    margin-bottom: 1px;
+}
+.card-item-title h4{
+    font-size: 18px;
+}
+
+.card-item-price{
+    margin-top: 30%;
+}
+.card-item-price p{
+    color: #ec6f18;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+

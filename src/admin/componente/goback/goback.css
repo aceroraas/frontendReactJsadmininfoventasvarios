@@ -1,0 +1,26 @@
+.base-goback{
+  margin-left: 70px;
+}
+.base-goback a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-left: 1%;
+    color: #ec6f18;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 10px;
+    width: 80px;
+    padding: 5px 15px;
+  }
+  .base-goback a:hover {
+      background-color: #266f94;
+      border-radius: 10px;
+      color: white;
+    }
+  .base-goback svg {
+    margin-right: 10px;
+    height: 32px;
+    transform: rotate(180deg);
+  }
+  

@@ -1,0 +1,85 @@
+.nav-base {
+  display: flex;
+  align-items: center;
+  height: 74px;
+  width: 100%;
+  box-shadow: 0px 2px 10px 1px gray;
+}
+.nav-base-left {
+  margin-left: 1%;
+  width: 400px;
+}
+.nav-base-right {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10%;
+}
+.nav-base-right a{
+    margin-left: 6%;
+  }
+.nav-base-input {
+  text-decoration: none;
+}
+.nav-base-input p {
+  font-weight: 800;
+  color: #266f94;
+  display: inline;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.nav-base-input input {
+  width: 130px;
+}
+
+.nav-base-cargo {
+  display: inline-flex;
+  margin-left: 3%;
+  align-items: center;
+}
+.nav-icon-cargo {
+  display: inline;
+}
+.nav-icon-cargo svg {
+  color: #266f94;
+  height: 32px;
+}
+.nav-base-cargo p {
+    text-decoration: none;
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1em;
+    font-weight: 800;
+    text-transform: uppercase;
+    object-position: center;
+    color: #266f94;
+}
+.nav-base-usuario {
+    color: #266f94;
+    display: inline-flex;
+    align-items: center;
+}
+.nav-icon-usuario {
+    display: inline;
+}
+.nav-icon-usuario svg {
+    color: #266f94;
+    height: 32px;
+    cursor: pointer;
+}
+.nav-icon-usuario svg:hover {
+    height: 34px;
+}
+.nav-icon-usuario a:active svg {
+  color: #ec6f18;
+}
+.nav-base-usuario p {
+    display: inline;
+    margin-left: 5px;
+    font-size: 1em;
+    font-weight: 800;
+    text-transform: uppercase;
+    object-position: center;
+    color: #266f94;
+}

@@ -1,0 +1,22 @@
+.bar-base{
+    width: 70px;
+    background-color: #266f94;
+    height: 400vh;
+    display: flex;
+    float: left;
+    overflow: hidden;
+}
+.bar-icons{
+    margin-top: 40%;
+}
+.bar-icons a, .bar-icons svg{
+    margin-bottom: 90%;
+    margin-left: 50%;
+    display: block;
+    color: white;
+    height: 28px;
+}
+
+a:active svg{
+    color: #ec6f18;
+}
