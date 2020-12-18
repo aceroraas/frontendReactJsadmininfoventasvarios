@@ -1,8 +1,9 @@
 import "./goback.css";
 import { ReactComponent as Iback } from "../../../media/icons/caret-right-solid.svg";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-function Goback({ history }) {
+function Goback() {
+  const history= useHistory();
   function goback() {
     history.goBack();
   }

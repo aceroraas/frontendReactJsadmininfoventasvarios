@@ -6,6 +6,8 @@ import "./items.css";
 import { ReactComponent as Isearch } from "../../../media/icons/search-solid.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NewItem from "./newItem";
+import { toast } from "react-toastify";
 
 const CardItem = ({ props }) => {
   let img = JSON.parse(props.url_images).img_one;
@@ -30,8 +32,6 @@ const CardItem = ({ props }) => {
   );
 };
 
-
-
 const searchItem = (e, setSearchItems, query, category, token) => {
   e.preventDefault();
   let inf = document.getElementById("info");
@@ -41,9 +41,14 @@ const searchItem = (e, setSearchItems, query, category, token) => {
     })
     .then((e) => {
       setSearchItems(e.data);
+      if (e.data.length === 0) {
+        toast.warning("🤧 No este producto en linea");
+      } else {
+        toast("🧐 creo que encontre lo que buscabas");
+      }
     })
     .catch((e) => {
-      inf.innerText = "no se encontro nah";
+      toast.info("No lo encuentro");
     });
 };
 
@@ -53,9 +58,15 @@ const getAllItems = (e, setItems, token) => {
     .get("aitems/all", { headers: { Authorization: `Bearer ${token}` } })
     .then((e) => {
       setItems(e.data);
+      if (e.data.length === 0) {
+        toast.warning("🤧 No tienes Productos en linea");
+      } else {
+        toast("🧐 creo que encontre lo que buscabas");
+      }
     });
 };
 function Items() {
+  const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [searchitems, setSearchItems] = useState([]);
   const history = useHistory();
@@ -67,7 +78,6 @@ function Items() {
         setCategories(e.data);
       });
   }, [token]);
-
   return (
     <>
       <Nav />
@@ -83,8 +93,9 @@ function Items() {
               placeholder="Escriba el codigo o nombre del producto"
               onKeyPressCapture={(e) => {
                 if (e.key === "Enter") {
+                  setShow(false);
                   let query = document.getElementById("query");
-                  if (query.value.length > 1) {
+                  if (query.value.length > 0) {
                     let thecategory = document.getElementById("thecategory")
                       .value;
                     query.style.color = "#266f94";
@@ -108,11 +119,15 @@ function Items() {
           </div>
           <div className="search-category">
             <select id="thecategory">
-              <option selected defaultValue="all">
+              <option defaultValue value="all">
                 Todas las categorias
               </option>
               {categories?.map((e) => {
-                return <option key={e.id} defaultValue={e.id}>{e.category_name}</option>;
+                return (
+                  <option key={e.id} value={e.id}>
+                    {e.category_name}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -121,7 +136,9 @@ function Items() {
               href="#search"
               onClick={(e) => {
                 let query = document.getElementById("query");
-                if (query.value.length > 1) {
+                if (query.value.length > 0) {
+                  setShow(false);
+
                   let thecategory = document.getElementById("thecategory")
                     .value;
                   query.style.color = "#266f94";
@@ -147,6 +164,8 @@ function Items() {
             <a
               href="#seeall"
               onClick={(e) => {
+                setShow(false);
+
                 getAllItems(e, setSearchItems, token);
               }}
             >
@@ -157,10 +176,11 @@ function Items() {
         <hr />
       </div>
       <div className="base-page-item">
+        {show ? <NewItem /> : ""}
         {searchitems?.map((e) => {
           return (
             <div key={e.id}>
-              <CardItem props={e} />
+              <CardItem key={e.id} props={e} />
             </div>
           );
         })}

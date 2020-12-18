@@ -5,12 +5,13 @@ import { ReactComponent as Isettings } from "../../../media/icons/cog-solid.svg"
 import {  NavLink } from "react-router-dom";
 
 function Bar(){
+    const user = JSON.parse(window.localStorage.getItem('user'));
     return (<>
     <div className="bar-base">
         <div className='bar-icons'>
             <div className='icon-exit'><NavLink to='#search'><Isearch /></NavLink></div>
-            <div className='icon-exit'><NavLink to='#settings'><Isettings /></NavLink></div>
-            <div className='icon-exit'><NavLink to='/logout'><Iexit /></NavLink></div>
+            {user.permits?user.permits.users?<div className='icon-exit'><NavLink to='/settings'><Isettings /></NavLink></div>:"":''}
+           <div className='icon-exit'><NavLink to='/logout'><Iexit /></NavLink></div>
         </div>
     </div>
     </>);

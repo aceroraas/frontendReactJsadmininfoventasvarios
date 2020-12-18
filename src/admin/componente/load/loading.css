@@ -1,0 +1,58 @@
+.base {
+  float: left;
+  width: calc(100% - 90px);
+  height: 100vh;
+  position: absolute;
+
+}
+
+.base-load {
+  height: 100vh;
+  width: calc(100vw - 90px);
+  display: flex;
+  align-items: center;
+  float: left;
+  position: absolute;
+
+}
+.load {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 2s ease-in;
+}
+
+.load .la {
+  height: 10px;
+  width: calc(100vw - 90px);
+  left: 70px;
+  position: absolute;
+  transition: 500ms ease-in-out;
+  animation: p 800ms infinite ease-in-out;
+}
+.load .lb {
+  position: absolute;
+  height: 10px;
+  left: 70px;
+  background-color: #ec6f18;
+  transition: 500ms ease-in-out;
+  animation: load 2s infinite ease-in-out;
+}
+@keyframes p {
+  from {
+    background-color: rgba(141, 141, 141, 0.501);
+  }
+  to {
+    background-color: rgba(84, 84, 84, 0.707);
+  }
+}
+
+@keyframes load {
+  from {
+    width: 1vw;
+  }
+  to {
+    width:calc(100vw - 90px);
+  }
+}

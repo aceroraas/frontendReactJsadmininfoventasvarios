@@ -7,6 +7,7 @@ import { ReactComponent as Iuser } from "../../../media/icons/user-astronaut-sol
 
 import "./users.css";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function NewUser() {
   const user = JSON.parse(window.localStorage.user);
@@ -24,8 +25,8 @@ function NewUser() {
   }, [token]);
 
 
-  function createUser(e, data) {
-    e.preventDefault();
+  function createUser(data) {
+    toast.info('✍️ ya estamos registrando el usuario, por favor espere que se le confirme')
 
     axios
       .post(
@@ -50,10 +51,9 @@ function NewUser() {
         }
       )
       .then((e) => {
-       alert('El usuario se ha creado correctamente');
-       window.location='/settings-users';
+       toast.success('El usuario se ha creado correctamente');
       }).catch((e)=>{
-        alert('El usuario no se ha creado, intentelo mas tarde');
+        toast.error('El usuario no se ha creado, intentelo mas tarde',{autoClose:false});
       });
   }
 
@@ -81,8 +81,8 @@ function NewUser() {
     <>
       <Nav position={user.position} userName={user.user_name} />
       <Bar />
-      <div className="base-users">
         <Goback history={history} />
+      <div className="base-users">
       </div>
       <div className="base-update">
         <div className="columns">
@@ -251,6 +251,7 @@ function NewUser() {
               <a
                 href="#updateuser"
                 onClick={(e) => {
+                  e.preventDefault()
                   const new_infoUser = {
                     first_name: document.getElementById("first_name").value,
                     second_name: document.getElementById("second_name").value,
@@ -287,7 +288,7 @@ function NewUser() {
                   new_permits.users = document.getElementById("users").checked;
                   new_permits.ads = document.getElementById("ads").checked;
                   new_permits.rates = document.getElementById("rates").checked;
-                  createUser(e, {
+                  createUser( {
                     permits: new_permits,
                     userData: new_infoUser,
                   });

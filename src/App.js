@@ -14,7 +14,16 @@ import coupons from "./admin/pages/coupons/coupons";
 import items from "./admin/pages/items/items";
 import ads from "./admin/pages/ads/ads";
 import editItem from "./admin/pages/items/editItem";
-//axios.defaults.baseURL = "http://secret-mountain-34847.herokuapp.com/api/beta";
+import clientsView from "./admin/pages/clients/clientsView";
+import { ModalProvider } from "react-simple-hook-modal";
+import 'react-simple-hook-modal/dist/styles.css';
+import editClient from "./admin/pages/clients/editClient";
+import detailOrder from "./admin/pages/orders/detailOrder";
+import setting from "./admin/pages/settings/setting";
+import Money from "./admin/pages/settings/setting-money";
+import F404 from "./admin/componente/404/404";
+import Sfile from "./admin/pages/settings/setting-file";
+//axios.defaults.baseURL = "https://api.infoventasvarios.com.ve/api/beta";
 axios.defaults.baseURL = "http://api.localhost/api/beta";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
@@ -45,21 +54,30 @@ const Logout = () => {
 function App() {
   return (
     <>
-      <Switch>
-        <MyRoute exact path="/ads"  component={ads}/>
-        <MyRoute exact path="/items/edit/:id"  component={editItem}/>
-        <MyRoute exact path="/items"  component={items}/>
-        <MyRoute exact path="/coupons"  component={coupons}/>
-        <MyRoute exact path="/clients"  component={clients}/>
-        <MyRoute exact path="/orders"  component={orders}/>
-        <MyRoute exact path="/settings-users/new"  component={NewUser}/>
-        <MyRoute path="/settings-users/:id" component={UpdateUser}/>
-        <MyRoute exact path="/settings-users" component={Users} />
-        <MyRoute exact path="/profile" component={Profile} />
-        <MyRoute exact path="/inicio" component={Dashboard} />
-        <Route exact path="/logout" component={Logout} />
-        <Route exact path="/" component={Login} />
-      </Switch>
+      <ModalProvider>
+        <Switch>
+          <MyRoute exact path="/ads" component={ads} />
+          <MyRoute exact path="/items/edit/:id" component={editItem} />
+          <MyRoute exact path="/items" component={items} />
+          <MyRoute exact path="/coupons" component={coupons} />
+          <MyRoute exact path="/clients/edit/:id" component={editClient} />
+          <MyRoute exact path="/clients/:id" component={clientsView} />
+          <MyRoute exact path="/clients" component={clients} />
+          <MyRoute exact path="/orders/:id" component={detailOrder} />
+          <MyRoute exact path="/orders" component={orders} />
+          <MyRoute exact path="/settings-users/new" component={NewUser} />
+          <MyRoute path="/settings-users/:id" component={UpdateUser} />
+          <MyRoute exact path="/settings-users" component={Users} />
+          <MyRoute exact path="/profile" component={Profile} />
+          <MyRoute exact path="/settings-file" component={Sfile} />
+          <MyRoute exact path="/settings-money" component={Money} />
+          <MyRoute exact path="/settings" component={setting} />
+          <MyRoute exact path="/inicio" component={Dashboard} />
+          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/" component={Login} />
+          <Route exact path="*" component={F404} />
+        </Switch>
+      </ModalProvider>
     </>
   );
 }

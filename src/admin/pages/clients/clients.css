@@ -1,0 +1,169 @@
+.table-clients {
+  text-align: center;
+  width: 100%;
+}
+.table-clients th {
+  padding: 3px 8px;
+  color: #ec6f18;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+.table-clients td {
+  padding: 2px 6px;
+  font-weight: 700;
+}
+.table-clients td a {
+  padding: 3px 20%;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  background-color: #266f94;
+  box-shadow: 0px 2px 2px 1px gray;
+}
+.table-clients td a:hover {
+  background-color: #ec6f18;
+}
+.base-clients {
+  margin-left: 70px;
+  width: 94%;
+}
+
+.base-client {
+  margin-left: 70px;
+  width: 94%;
+}
+
+.base-client-top {
+  width: 100%;
+  height: 50vh;
+}
+.base-client-letf,
+.base-client-right {
+  width: 50%;
+  height: 100%;
+}
+.base-client-letf {
+  text-align: left;
+  float: left;
+}
+.base-client-right {
+  text-align: right;
+  float: right;
+}
+.base-client-bottom {
+  width: 100%;
+  text-align: center;
+}
+.client-buttons {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.client-buttons a {
+  text-transform: uppercase;
+  margin: 20px;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: #266f94;
+  font-weight: 700;
+  box-shadow: 0px 2px 5px -1px gray;
+  transition: 0.1s ease-in-out;
+}
+.client-buttons a:hover {
+  color: white;
+  background-color: rgb(123, 122, 122) !important;
+}
+.client-buttons a:active {
+  padding: 3px 10px;
+}
+
+.red {
+  background-color: red !important;
+}
+
+.gray {
+  background-color: rgb(143, 141, 141) !important;
+}
+
+.primary {
+  background-color: #266f94 !important;
+}
+
+.secundary {
+  background-color: #ec6f18 !important;
+}
+
+.text-white {
+  color: white !important;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.text-red {
+  color: red !important;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.text-primary {
+  color: #ec6f18 !important;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.text-secundary {
+  padding-left: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.client-tablet th {
+  padding: 10px 30px;
+}
+
+.client-tablet td {
+  padding: 10px 30px;
+}
+.client-tablet td input {
+  padding: 10px 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.modal-btn {
+  width: 100%;
+  bottom: 0;
+}
+.modal-btn a {
+  padding: 7px 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  position: absolute;
+  margin: 10px;
+}
+.modal-btn a:hover {
+  background-color: rgba(128, 128, 128, 0.707) !important;
+}
+.modal-btn a:active {
+  padding: 5px 10px;
+  background-color: gray !important;
+}
+.modal-btn .primary {
+  right: 0px;
+  bottom: 0 !important;
+}
+
+.modal-btn .secundary {
+  right: 25%;
+  bottom: 0 !important;
+}
+.modal-btn .red {
+  left: 0px;
+  bottom: 0 !important;
+}
+.modal-body {
+  position: relative;
+  width: 100%;
+}

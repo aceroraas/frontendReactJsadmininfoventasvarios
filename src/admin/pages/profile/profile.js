@@ -10,21 +10,20 @@ function Profile() {
   let user = JSON.parse(window.localStorage.user);
   const history = useHistory();
 
-
   return (
     <>
-      <Nav position={user.position} userName={user.user_name} />
+      <Nav />
       <Bar />
       <div className="base-profile">
-        <Goback history={history} />
+      <Goback history={history} />
         <div className="base-profile-data">
           <div className="profile-h3">
             <h3>{`${user.first_name.toUpperCase()} ${user.second_name.toUpperCase()}`}</h3>
             <h3>{`${user.national_id}`}</h3>
           </div>
           <div className="profile-input">
-              <h3>{user.email} </h3>
-              <h3>{user.number_phone}</h3>
+            <h3>{user.email} </h3>
+            <h3>{user.number_phone}</h3>
           </div>
         </div>
         <div className="base-profile-img">
@@ -35,9 +34,7 @@ function Profile() {
           </div>
         </div>
         <div className="base-profile-btn">
-          <Link to={`/settings-users/${user.id}`}>
-            ACTUALIZAR
-          </Link>
+          <Link to={`/settings-users/${user.id}`}>ACTUALIZAR</Link>
         </div>
       </div>
     </>

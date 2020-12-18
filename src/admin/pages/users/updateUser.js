@@ -6,6 +6,7 @@ import Goback from "../../componente/goback/goback";
 import Nav from "../../componente/nav/nav";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function UserDatas({ userd, complements }) {
   const token = window.localStorage.getItem("token");
@@ -14,6 +15,7 @@ function UserDatas({ userd, complements }) {
   const UpdateUser = (e, data) => {
     const token = window.localStorage.getItem("token");
     e.preventDefault();
+    toast.info('✍️ ya estamos actualizando datos, por favor espere que se le confirme')
     axios
       .put(
         "/auth/update",
@@ -31,7 +33,7 @@ function UserDatas({ userd, complements }) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((e) => {
-        alert("Datos Actualizados Exitosamente");
+        toast.success("Datos Actualizados Exitosamente");
         window.location = "/settings-users";
       })
       .catch((e) => console.log(e));
@@ -44,10 +46,9 @@ function UserDatas({ userd, complements }) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((e) => {
-        alert("el usuario ha sido eliminado");
-        window.location = "/settings-users";
+        toast.info("el usuario ha sido eliminado",{autoClose:false});
       })
-      .catch((e) => alert("no se ha podido elminar, intentelo mas tarde"));
+      .catch((e) => toast.error("no se ha podido elminar, intentelo mas tarde",{autoClose:false}));
   };
 
   const ifAllPermits = (e) => {
@@ -381,7 +382,6 @@ function UpdateUsers() {
   const [userUpdate, setUserUpdate] = useState({});
   const [complements, setComplements] = useState([{}]);
   const { id } = useParams();
-  const user = JSON.parse(window.localStorage.user);
   const history = useHistory();
 
   useEffect(() => {
@@ -419,8 +419,8 @@ function UpdateUsers() {
     <>
       <Nav />
       <Bar />
-      <div className="base-users">
         <Goback history={history} />
+      <div className="base-users">
         {userUpdate.response ? (
           <ErrorMessage error={userUpdate} />
         ) : (
