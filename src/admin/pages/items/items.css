@@ -111,9 +111,25 @@
   margin-top: -14px;
   margin-left: 5px;
   margin-bottom: 1px;
+  height: 44px;
+  max-height: 44px;
 }
 .card-item-title h4 {
   font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-item-brand {
+  text-align: left;
+  margin-left: 5px;
+  height: 1px;
+  max-height: 2px;
+}
+.card-item-brand h4 {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-item-price {

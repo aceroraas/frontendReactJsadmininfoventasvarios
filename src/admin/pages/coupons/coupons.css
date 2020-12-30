@@ -1,0 +1,16 @@
+.couponinputs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.cinput {
+  margin: 15px;
+  display: inline-block;
+}
+
+
+input[type=radio]:checked + label{
+  color: #266F94 !important;
+}
+
+

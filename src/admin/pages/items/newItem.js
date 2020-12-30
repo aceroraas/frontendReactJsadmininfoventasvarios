@@ -271,10 +271,9 @@ const Msubcategory = ({ setTer }) => {
                             { autoClose: false }
                           );
                         } else {
-                          toast.error(
-                            "Error, inesperado:"+ e.toString(),
-                            { autoClose: false }
-                          );
+                          toast.error("Error, inesperado:" + e.toString(), {
+                            autoClose: false,
+                          });
                         }
                       });
                   }}
@@ -321,7 +320,8 @@ const Msubcategory = ({ setTer }) => {
                               setTer(e.data);
                               setSubcategory(e.data);
                               toast.success("Se ha eliminado con exito");
-                            }).catch((e)=>{
+                            })
+                            .catch((e) => {
                               if (e.request) {
                                 toast.error(
                                   "No podemos conectarnos al Servidor, verifica tu conexión",
@@ -329,7 +329,7 @@ const Msubcategory = ({ setTer }) => {
                                 );
                               } else {
                                 toast.error(
-                                  "Error, inesperado:"+ e.toString(),
+                                  "Error, inesperado:" + e.toString(),
                                   { autoClose: false }
                                 );
                               }
@@ -369,6 +369,7 @@ const Mfamilia = ({ setTer }) => {
   const [familia, setFamilia] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(6);
   const [selectedSubCategory, setSelectedSubCategory] = useState(68);
+  // eslint-disable-next-line
   const [selectedCategoryname, setSelectedCategoryname] = useState("");
   const [selectedSubCategoryname, setSelectedSubCategoryname] = useState("");
   const token = window.localStorage.getItem("token");
@@ -387,14 +388,14 @@ const Mfamilia = ({ setTer }) => {
       .then((e) => {
         setSubcategory(e.data);
       });
-      axios
+    axios
       .get(`/categories/fam/${selectedSubCategory}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((e) => {
         setFamilia(e.data);
       });
-  }, [selectedSubCategory,selectedCategory, token]);
+  }, [selectedSubCategory, selectedCategory, token]);
   return (
     <>
       <Link
@@ -469,7 +470,7 @@ const Mfamilia = ({ setTer }) => {
                   </select>
                 </label>
               </div>
-              <br/>
+              <br />
               <div style={{ marginLeft: "0", width: "100%" }}>
                 <input id="newsubcate" type="text" />
                 <Link
@@ -522,10 +523,9 @@ const Mfamilia = ({ setTer }) => {
                             { autoClose: false }
                           );
                         } else {
-                          toast.error(
-                            "Error, inesperado:"+ e.toString(),
-                            { autoClose: false }
-                          );
+                          toast.error("Error, inesperado:" + e.toString(), {
+                            autoClose: false,
+                          });
                         }
                       });
                   }}
@@ -572,7 +572,8 @@ const Mfamilia = ({ setTer }) => {
                               setTer(e.data);
                               setFamilia(e.data);
                               toast.success("Se ha eliminado con exito");
-                            }).catch((e)=>{
+                            })
+                            .catch((e) => {
                               if (e.request) {
                                 toast.error(
                                   "No podemos conectarnos al Servidor, verifica tu conexión",
@@ -580,7 +581,7 @@ const Mfamilia = ({ setTer }) => {
                                 );
                               } else {
                                 toast.error(
-                                  "Error, inesperado:"+ e.toString(),
+                                  "Error, inesperado:" + e.toString(),
                                   { autoClose: false }
                                 );
                               }
@@ -633,7 +634,7 @@ const CardItem = ({ props }) => {
                 <h4>{props.item.title}</h4>
               </a>
             </div>
-            <div className="card-item-title">
+            <div className="card-item-brand">
               <a href="#a" style={{ color: "black" }}>
                 <h4>{props.item.brand}</h4>
               </a>
@@ -799,7 +800,9 @@ function NewItem() {
   const [item, setItem] = useState({});
   const [imgPrincipal, setImgPrincipal] = useState({});
   const [imgs, setImgs] = useState({});
+  // eslint-disable-next-line
   const [properties, setProperties] = useState({});
+  // eslint-disable-next-line
   const [colors, setColors] = useState([]);
   const token = window.localStorage.getItem("token");
 
@@ -870,7 +873,7 @@ function NewItem() {
             </div>
             <div className="input-brand">
               <label>
-                * Marca:
+                 Marca:
                 <input
                   id="iBrand"
                   type="text"
@@ -999,160 +1002,6 @@ function NewItem() {
               </div>
             </div>
           </div>
-          {/* <div className="properties">
-            <div className="property">
-              <div className="property-input">
-                <label>
-                  Colores:
-                  <input
-                    onInput={(e) => {
-                      if (e.target.checked === false) {
-                        document.getElementsByClassName(
-                          "colors"
-                        )[0].style.visibility = "hidden";
-                        document.getElementsByClassName(
-                          "colors"
-                        )[1].style.visibility = "hidden";
-                        document.getElementsByClassName(
-                          "colors"
-                        )[2].style.visibility = "hidden";
-                        document.getElementsByClassName(
-                          "colors"
-                        )[3].style.visibility = "hidden";
-                      } else {
-                        document.getElementsByClassName(
-                          "colors"
-                        )[0].style.visibility = "visible";
-                        document.getElementsByClassName(
-                          "colors"
-                        )[1].style.visibility = "visible";
-                        document.getElementsByClassName(
-                          "colors"
-                        )[2].style.visibility = "visible";
-                        document.getElementsByClassName(
-                          "colors"
-                        )[3].style.visibility = "visible";
-                      }
-                    }}
-                    id="checkColors"
-                    type="checkbox"
-                  ></input>
-                </label>
-                <input
-                  id="colo_one"
-                  onClick={(e) => {
-                    setColors([...colors, e.target.value]);
-                  }}
-                  className="colors"
-                  defaultValue={
-                    item.properties
-                      ? JSON.parse(item.properties).color
-                        ? JSON.parse(item.properties).color[0]
-                        : "#ec6f18"
-                      : "#ec6f18"
-                  }
-                  type="color"
-                ></input>
-                <input
-                  id="colo_two"
-                  onClick={(e) => {
-                    setColors([...colors, e.target.value]);
-                  }}
-                  className="colors"
-                  defaultValue={
-                    item.properties
-                      ? JSON.parse(item.properties).color
-                        ? JSON.parse(item.properties).color[1]
-                        : "#2a7fa9"
-                      : "#2a7fa9"
-                  }
-                  type="color"
-                ></input>
-                <input
-                  id="colo_tree"
-                  className="colors"
-                  onClick={(e) => {
-                    setColors([...colors, e.target.value]);
-                  }}
-                  defaultValue={
-                    item.properties
-                      ? JSON.parse(item.properties).color
-                        ? JSON.parse(item.properties).color[2]
-                        : "#000000"
-                      : "#000000"
-                  }
-                  type="color"
-                ></input>
-                <input
-                  id="colo_Four"
-                  onClick={(e) => {
-                    setColors([...colors, e.target.value]);
-                  }}
-                  className="colors"
-                  defaultValue={
-                    item.properties
-                      ? JSON.parse(item.properties).color
-                        ? JSON.parse(item.properties).color[3]
-                        : "#eeeeee"
-                      : "#eeeeee"
-                  }
-                  type="color"
-                ></input>
-              </div>
-            </div>
-            <div className="property">
-              <div className="property-input">
-                <label>
-                  Talla:
-                  <input id="checkSize" type="checkbox"></input>
-                </label>
-                <input
-                  id="ipSize"
-                  onInput={(e) => {
-                    e.preventDefault();
-                    let check = document.getElementById("checkSize").checked;
-                    if (check) {
-                      setProperties({ ...properties, size: e.target.value });
-                    }
-                  }}
-                  defaultValue={
-                    item.properties
-                      ? JSON.parse(item.properties).size ?? ""
-                      : ""
-                  }
-                  type="text"
-                ></input>
-              </div>
-            </div>
-            <div className="property">
-              <div className="property-input">
-                <label>
-                  Dimensiones:
-                  <input id="checkDimensions" type="checkbox"></input>
-                </label>
-                <input
-                  id="ipDimensions"
-                  onInput={(e) => {
-                    e.preventDefault();
-                    let check = document.getElementById("checkDimensions")
-                      .checked;
-                    if (check) {
-                      setProperties({
-                        ...properties,
-                        dimensions: e.target.value,
-                      });
-                    }
-                  }}
-                  defaultValue={
-                    item.properties
-                      ? JSON.parse(item.properties).dimensions ?? ""
-                      : ""
-                  }
-                  type="text"
-                ></input>
-              </div>
-            </div>
-          </div> */}
         </div>
         <div className="base-edit-right">
           <div className="card-background">
@@ -1179,150 +1028,183 @@ function NewItem() {
           <a
             onClick={(e) => {
               e.preventDefault();
-              if (Object.keys(item).length >= 7) {
-                const titem = item;
-                const fd = new FormData();
+              if (item.code && item.code !== "") {
+                if (item.title && item.title !== "") {
+                  if (item.description && item.description !== "") {
+                    if (item.price && parseFloat(item.price) > 0) {
+                      if (item.stock && parseInt(item.stock) > 0) {
+                        if (Object.keys(item).length >= 6) {
+                          const titem = item;
+                          const fd = new FormData();
 
-                if (Object.keys(properties).length > 0) {
-                  const propiedades = properties;
-                  if (colors.length > 0) {
-                    propiedades.color = colors;
-                    titem.properties = JSON.stringify(propiedades);
-                  } else {
-                    titem.properties = JSON.stringify(propiedades);
-                  }
-                }
-                if (document.getElementById("iFamily")) {
-                  titem.family_id = document.getElementById("iFamily").value;
-                } else {
-                  titem.family_id = 217;
-                }
-                if (Object.keys(imgs).length > 0) {
-                  fd.append("imgP", imgs.imgP);
-                  fd.append("imgS", imgs.imgS);
-                  fd.append("imgT", imgs.imgT);
-                  fd.append("imgF", imgs.imgF);
+                          if (Object.keys(properties).length > 0) {
+                            const propiedades = properties;
+                            if (colors.length > 0) {
+                              propiedades.color = colors;
+                              titem.properties = JSON.stringify(propiedades);
+                            } else {
+                              titem.properties = JSON.stringify(propiedades);
+                            }
+                          }
+                          if (document.getElementById("iFamily")) {
+                            titem.family_id = document.getElementById(
+                              "iFamily"
+                            ).value;
+                          } else {
+                            titem.family_id = 217;
+                          }
+                          if (Object.keys(imgs).length > 0) {
+                            fd.append("imgP", imgs.imgP);
+                            fd.append("imgS", imgs.imgS);
+                            fd.append("imgT", imgs.imgT);
+                            fd.append("imgF", imgs.imgF);
 
-                  toast.info(
-                    "💪 Creando nuevo Producto, porfavor Espere la confirmación",
-                    {
-                      autoClose: 4000,
-                      closeOnClick: true,
-                      draggable: true,
-                      progress: undefined,
-                    }
-                  );
-                  axios
-                    .post("aitems/saveimg", fd, {
-                      headers: { Authorization: `Bearer ${token}` },
-                    })
-                    .then((e) => {
-                      titem.url_images = JSON.stringify(e.data);
-                      axios
-                        .post("aitems/new", titem, {
-                          headers: { Authorization: `Bearer ${token}` },
-                        })
-                        .then((e) => {
-                          toast.success(
-                            `🥳 Genial Ya el producto ${item.title} esta en linea`,
+                            toast.info(
+                              "💪 Creando nuevo Producto, porfavor Espere la confirmación",
+                              {
+                                autoClose: 4000,
+                                closeOnClick: true,
+                                draggable: true,
+                                progress: undefined,
+                              }
+                            );
+                            axios
+                              .post("aitems/saveimg", fd, {
+                                headers: { Authorization: `Bearer ${token}` },
+                              })
+                              .then((e) => {
+                                titem.url_images = JSON.stringify(e.data);
+                                axios
+                                  .post("aitems/new", titem, {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  })
+                                  .then((e) => {
+                                    toast.success(
+                                      `🥳 Genial Ya el producto ${item.title} esta en linea`,
+                                      {
+                                        autoClose: false,
+                                        closeOnClick: true,
+                                        draggable: true,
+                                      }
+                                    );
+                                  })
+                                  .catch((e) => {
+                                    axios
+                                      .put(
+                                        "/aitems/fail",
+                                        { url_images: titem.url_images },
+                                        {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      )
+                                      .then((e) => {
+                                        console.log(e.data);
+                                      });
+                                    if (
+                                      e.response &&
+                                      e.response.status === 400
+                                    ) {
+                                      toast.error(
+                                        `🤦‍♂️ aff, tienes un error en los campos ingresado, verifica que todo es bien`,
+                                        {
+                                          autoClose: false,
+                                          closeOnClick: true,
+                                          draggable: true,
+                                        }
+                                      );
+                                    } else if (e.request) {
+                                      toast.error(
+                                        `💔, el servidor no me responde, ¿tienes internet? ¿y si lo intentas mas tarde?`,
+                                        {
+                                          autoClose: false,
+                                          closeOnClick: true,
+                                          draggable: true,
+                                        }
+                                      );
+                                    } else {
+                                      toast.error(
+                                        `💔😰, a nooooo, ¿tienes internet? el navegador me dijo esto: ,${e.message}`,
+                                        {
+                                          autoClose: false,
+                                          closeOnClick: true,
+                                          draggable: true,
+                                        }
+                                      );
+                                    }
+                                  });
+                              })
+                              .catch((e) => {
+                                if (e.response && e.response.status === 400) {
+                                  toast.error(
+                                    `🤦‍♂️ aff, creo que enviaste la imagen que no era, porque me salio error`,
+                                    {
+                                      autoClose: false,
+                                      closeOnClick: true,
+                                      draggable: true,
+                                    }
+                                  );
+                                } else if (e.request) {
+                                  toast.error(
+                                    `💔, el servidor no me responde, ¿tienes internet? ¿y si lo intentas mas tarde?`,
+                                    {
+                                      autoClose: false,
+                                      closeOnClick: true,
+                                      draggable: true,
+                                    }
+                                  );
+                                } else {
+                                  toast.error(
+                                    `💔😰, a nooooo, ¿tienes internet? el navegador me dijo esto: ,${e.message}`,
+                                    {
+                                      autoClose: false,
+                                      closeOnClick: true,
+                                      draggable: true,
+                                    }
+                                  );
+                                }
+                              });
+                          } else {
+                            toast.warning(
+                              "😬 La imagen principal es importante, agregala selecionando la tarjeta de color azul",
+                              {
+                                autoClose: false,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                draggable: true,
+                              }
+                            );
+                          }
+                        } else {
+                          toast.warning(
+                            "😬Recuerda llenar los datos marcados con * y debes ingresar una imagen selecionando la tarjeta de color azul",
                             {
                               autoClose: false,
+                              hideProgressBar: true,
                               closeOnClick: true,
                               draggable: true,
                             }
                           );
-                        })
-                        .catch((e) => {
-                          axios
-                            .put(
-                              "/aitems/fail",
-                              { url_images: titem.url_images },
-                              { headers: { Authorization: `Bearer ${token}` } }
-                            )
-                            .then((e) => {
-                              console.log(e.data);
-                            });
-                          if (e.response && e.response.status === 400) {
-                            toast.error(
-                              `🤦‍♂️ aff, tienes un error en los campos ingresado, verifica que todo es bien`,
-                              {
-                                autoClose: false,
-                                closeOnClick: true,
-                                draggable: true,
-                              }
-                            );
-                          } else if (e.request) {
-                            toast.error(
-                              `💔, el servidor no me responde, ¿tienes internet? ¿y si lo intentas mas tarde?`,
-                              {
-                                autoClose: false,
-                                closeOnClick: true,
-                                draggable: true,
-                              }
-                            );
-                          } else {
-                            toast.error(
-                              `💔😰, a nooooo, ¿tienes internet? el navegador me dijo esto: ,${e.message}`,
-                              {
-                                autoClose: false,
-                                closeOnClick: true,
-                                draggable: true,
-                              }
-                            );
-                          }
-                        });
-                    })
-                    .catch((e) => {
-                      if (e.response && e.response.status === 400) {
-                        toast.error(
-                          `🤦‍♂️ aff, creo que enviaste la imagen que no era, porque me salio error`,
-                          {
-                            autoClose: false,
-                            closeOnClick: true,
-                            draggable: true,
-                          }
-                        );
-                      } else if (e.request) {
-                        toast.error(
-                          `💔, el servidor no me responde, ¿tienes internet? ¿y si lo intentas mas tarde?`,
-                          {
-                            autoClose: false,
-                            closeOnClick: true,
-                            draggable: true,
-                          }
-                        );
+                        }
                       } else {
-                        toast.error(
-                          `💔😰, a nooooo, ¿tienes internet? el navegador me dijo esto: ,${e.message}`,
-                          {
-                            autoClose: false,
-                            closeOnClick: true,
-                            draggable: true,
-                          }
-                        );
+                        toast.warning("😬El Campo Stock es importante");
                       }
-                    });
-                } else {
-                  toast.warning(
-                    "😬 La imagen principal es importante, agregala selecionando la tarjeta de color azul",
-                    {
-                      autoClose: false,
-                      hideProgressBar: true,
-                      closeOnClick: true,
-                      draggable: true,
+                    } else {
+                      toast.warning("😬El Campo Precio es importante");
                     }
-                  );
+                  } else {
+                    toast.warning(
+                      "😬El Campo Descripcion es importante es importante"
+                    );
+                  }
+                } else {
+                  toast.warning("😬El Campo Titulo es importante");
                 }
               } else {
-                toast.warning(
-                  "😬Recuerda llenar los datos marcados con * y debes ingresar una imagen selecionando la tarjeta de color azul",
-                  {
-                    autoClose: false,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    draggable: true,
-                  }
-                );
+                toast.warning("😬El Campo Codigo es importante");
               }
             }}
             className="btn-save"

@@ -25,11 +25,6 @@ import F404 from "./admin/componente/404/404";
 import Sfile from "./admin/pages/settings/setting-file";
 //axios.defaults.baseURL = "https://api.infoventasvarios.com.ve/api/beta";
 axios.defaults.baseURL = "http://api.localhost/api/beta";
-axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
-axios.defaults.headers.put["Content-Type"] = "application/json";
-axios.defaults.headers.put["Access-Control-Allow-Origin"] = "*";
-
 const isAuth = () => {
   let token = window.localStorage.getItem("token");
   let isValid = true;

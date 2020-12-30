@@ -70,7 +70,7 @@ const Quantity = ({ quantity, item }) => {
   );
 };
 
-const ConfirmDelete = ({}) => {
+const ConfirmDelete = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const { id } = useParams();
   const history = useHistory();

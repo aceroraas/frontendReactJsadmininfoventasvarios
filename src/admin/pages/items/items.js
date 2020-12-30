@@ -34,7 +34,6 @@ const CardItem = ({ props }) => {
 
 const searchItem = (e, setSearchItems, query, category, token) => {
   e.preventDefault();
-  let inf = document.getElementById("info");
   axios
     .get(`aitems/search/${query}/${category}`, {
       headers: { Authorization: `Bearer ${token}` },

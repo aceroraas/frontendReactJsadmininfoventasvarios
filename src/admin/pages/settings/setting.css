@@ -50,3 +50,22 @@
   margin-left: 70px;
   text-align: center;  
 }
+
+.basetable{
+  overflow-x: auto;
+  width: 90%;
+}
+.catalogo-table{
+  width: 100%;
+  border: solid 1px;
+  border-collapse: collapse;
+  
+}
+.catalogo-table th, .catalogo-table td{
+  border: solid 1px black;
+}
+.catalogo-table th{  
+  background-color: #ec6f18;
+  color: white;
+  padding: 5px;
+}

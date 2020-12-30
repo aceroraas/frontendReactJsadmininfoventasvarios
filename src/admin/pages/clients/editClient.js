@@ -27,7 +27,7 @@ function DataEditClient({ client }) {
                       <input
                         id="first_name"
                         type="text"
-                        size={client.first_name.length > 30 ?? 30}
+                        size={client.first_name?.length > 30 ?? 30}
                         defaultValue={client.first_name}
                         onInput={(e) => {
                           e.preventDefault();
@@ -37,7 +37,7 @@ function DataEditClient({ client }) {
                       <input
                         id="last_name"
                         type="text"
-                        size={client.second_name.length > 30 ?? 30}
+                        size={client.second_name?.length > 30 ?? 30}
                         defaultValue={client.second_name}
                         onInput={(e) => {
                           e.preventDefault();
@@ -90,7 +90,7 @@ function DataEditClient({ client }) {
                       <input
                         type="text"
                         maxLength="190"
-                        size={client.location.length}
+                        size={client.location?.length}
                         defaultValue={client.location}
                         onInput={(e) => {
                           e.preventDefault();
@@ -160,7 +160,6 @@ function DataEditClient({ client }) {
             </center>
           </div>
         </div>
-        <hr />
         <center className="client-buttons">
           <Link
             className="secundary text-white "
