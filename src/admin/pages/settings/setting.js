@@ -20,6 +20,7 @@ function Settings() {
                 <Idatabse />
               </div>
             </Link>
+                <h6>RESPALDO DEL SISTEMA</h6>
           </div>
           <div className="ba">
             <Link to="/settings-money">
@@ -27,14 +28,16 @@ function Settings() {
                 <Imoney />
               </div>
             </Link>
+                <h6>CONFIGURACIÓN DE MONEDA</h6>
           </div>
 
           <div className="ba">
             <Link to="/settings-file">
               <div className="btncard primary text-white">
-                <Ifile />
+                <Ifile /><br/>
               </div>
             </Link>
+                <h6>CONFIGURACIÓN DE CATALOGOS</h6>
           </div>
           
         </div>
