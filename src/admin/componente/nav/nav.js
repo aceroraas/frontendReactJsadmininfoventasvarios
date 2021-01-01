@@ -16,6 +16,9 @@ function Nav() {
       setRate(e.data.rates);
       setMoneda(e.data.national_currency_symbol);
     });
+    window.setTimeout(()=>{
+      window.scrollTo(0,0);
+    },100);
   }, []);
   return (
     <div className="nav-base">

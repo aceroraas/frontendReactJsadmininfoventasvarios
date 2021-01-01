@@ -155,9 +155,12 @@
   font-size: 1rem;
   font-weight: 800;
   text-transform: uppercase;
+
+}
+.inputs input[id=iTitle]{
+  width: 450px !important;
 }
 .inputs input {
-  width: 350px;
   margin-bottom: 5px;
 }
 .inputs input,

@@ -14,3 +14,50 @@ input[type=radio]:checked + label{
 }
 
 
+.autocomplete{
+  position: relative;
+  display: inline-block;
+}
+
+strong{
+  color: #266F94 !important;
+}
+
+.listAutoItems{
+  color: #cccccc;
+  position: absolute;
+  border: transparent;
+  border-bottom: none;
+  z-index: 99;
+  top: 91%;
+  left: 10px;
+  right: 0;
+  width: 97%;
+}
+
+.listAutoItems div{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #266F94;
+}
+
+.listAutoItems div:hover{
+  background-color: #EC6F18;
+  color: white;
+}
+
+.autocomplete-active{
+  background-color: #EC6F18 !important;
+  color: white;
+}
+.autocomplete-active strong{
+  color: black !important;
+}
+
+.autocomplete input{
+  width: 550px !important;
+}

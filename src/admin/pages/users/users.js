@@ -4,13 +4,10 @@ import Nav from "../../componente/nav/nav";
 import Bar from "../../componente/bar/bar";
 import Goback from "../../componente/goback/goback";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Users() {
   let [users, setUsers] = useState([]);
-  let user = JSON.parse(window.localStorage.user);
-  const history = useHistory();
-
   useEffect(() => {
     const getAllUsers = axios.get("users/all", {
       headers: {
@@ -21,9 +18,9 @@ function Users() {
   }, []);
   return (
     <>
-      <Nav position={user.position} userName={user.user_name} />
+      <Nav />
       <Bar />
-      <Goback history={history} />
+      <Goback />
       <div className="base-users">
         <div className="btn-create-user">
           <Link to="/settings-users/new">CREAR USUARIO</Link>
