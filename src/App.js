@@ -23,6 +23,7 @@ import setting from "./admin/pages/settings/setting";
 import Money from "./admin/pages/settings/setting-money";
 import F404 from "./admin/componente/404/404";
 import Sfile from "./admin/pages/settings/setting-file";
+import preview from "./admin/pages/items/preview";
 //axios.defaults.baseURL = "https://api.infoventasvarios.com.ve/api/beta";
 axios.defaults.baseURL = "http://api.localhost/api/beta";
 const isAuth = () => {
@@ -52,6 +53,7 @@ function App() {
       <ModalProvider>
         <Switch>
           <MyRoute exact path="/ads" component={ads} />
+          <MyRoute exact path="/items/preview/:id" component={preview} />
           <MyRoute exact path="/items/edit/:id" component={editItem} />
           <MyRoute exact path="/items" component={items} />
           <MyRoute exact path="/coupons" component={coupons} />

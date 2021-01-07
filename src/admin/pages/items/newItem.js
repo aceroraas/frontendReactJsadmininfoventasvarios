@@ -613,11 +613,15 @@ const Mfamilia = ({ setTer }) => {
 //################################################################################
 
 const CardItem = ({ props }) => {
+  useEffect(() => {
+    window.localStorage.setItem('data',JSON.stringify(props.item));
+    window.localStorage.setItem('imgs',JSON.stringify(props.Uimgs));
+  }, [props]);
   let img = props.imgPrincipal;
   return (
     <>
       <div className="base-card-item">
-        <a href="#a">
+        <Link to="/items/preview/0" target="_blank">
           <div className="card-item-all">
             <div className="base-card-img">
               <img
@@ -630,20 +634,16 @@ const CardItem = ({ props }) => {
               />
             </div>
             <div className="card-item-title">
-              <a href="#a">
-                <h4>{props.item.title}</h4>
-              </a>
+              <h4>{props.item.title}</h4>
             </div>
             <div className="card-item-brand">
-              <a href="#a" style={{ color: "black" }}>
-                <h4>{props.item.brand}</h4>
-              </a>
+              <h4>{props.item.brand}</h4>
             </div>
             <div className="card-item-price">
-              <p>$ {props.item.price}</p>
+              <p>$ {parseFloat(props.item.price).toFixed(2)}</p>
             </div>
           </div>
-        </a>
+        </Link>
       </div>
     </>
   );
@@ -800,6 +800,7 @@ function NewItem() {
   const [item, setItem] = useState({});
   const [imgPrincipal, setImgPrincipal] = useState({});
   const [imgs, setImgs] = useState({});
+  const [Uimgs, setUImgs] = useState({});
   // eslint-disable-next-line
   const [properties, setProperties] = useState({});
   // eslint-disable-next-line
@@ -845,6 +846,7 @@ function NewItem() {
               <label>
                 * Precio:
                 <input
+                  min="0"
                   id="iPrice"
                   type="number"
                   onInput={(e) => {
@@ -860,6 +862,7 @@ function NewItem() {
               <label>
                 * Stock:
                 <input
+                  min="0"
                   id="iStock"
                   type="number"
                   onInput={(e) => {
@@ -873,7 +876,7 @@ function NewItem() {
             </div>
             <div className="input-brand">
               <label>
-                 Marca:
+                Marca:
                 <input
                   id="iBrand"
                   type="text"
@@ -920,6 +923,7 @@ function NewItem() {
                       if (e.target.files[0]) {
                         reader.readAsDataURL(e.target.files[0]);
                         reader.onload = function (e) {
+                          setUImgs({ ...Uimgs, img_one:e.target.result});
                           setImgPrincipal(e.target.result);
                           preview.style.backgroundImage = `url(${e.target.result})`;
                         };
@@ -944,6 +948,7 @@ function NewItem() {
                       if (e.target.files[0]) {
                         reader.readAsDataURL(e.target.files[0]);
                         reader.onload = function (e) {
+                          setUImgs({ ...Uimgs, img_two:e.target.result});
                           preview.style.backgroundImage = `url(${e.target.result})`;
                         };
                       } else {
@@ -951,7 +956,7 @@ function NewItem() {
                       }
                     }}
                     type="file"
-                  />
+                    />
                 </label>
               </div>
               <div id="img-card-tree" className="img-card">
@@ -967,6 +972,7 @@ function NewItem() {
                       if (e.target.files[0]) {
                         reader.readAsDataURL(e.target.files[0]);
                         reader.onload = function (e) {
+                          setUImgs({ ...Uimgs, img_tree:e.target.result});
                           preview.style.backgroundImage = `url(${e.target.result})`;
                         };
                       } else {
@@ -991,6 +997,7 @@ function NewItem() {
                       if (e.target.files[0]) {
                         reader.readAsDataURL(e.target.files[0]);
                         reader.onload = function (e) {
+                          setUImgs({ ...Uimgs, img_four:e.target.result});
                           preview.style.backgroundImage = `url(${e.target.result})`;
                         };
                       } else {
@@ -1006,7 +1013,7 @@ function NewItem() {
         <div className="base-edit-right">
           <div className="card-background">
             {Object.keys(item).length !== 0 ? (
-              <CardItem props={{ item, imgPrincipal }} />
+              <CardItem props={{ item, imgPrincipal, Uimgs }} />
             ) : (
               <h2>Cargando Vista Previa</h2>
             )}
@@ -1032,7 +1039,7 @@ function NewItem() {
                 if (item.title && item.title !== "") {
                   if (item.description && item.description !== "") {
                     if (item.price && parseFloat(item.price) > 0) {
-                      if (item.stock && parseInt(item.stock) > 0) {
+                      if (item.stock && parseInt(item.stock) >= 0) {
                         if (Object.keys(item).length >= 6) {
                           const titem = item;
                           const fd = new FormData();

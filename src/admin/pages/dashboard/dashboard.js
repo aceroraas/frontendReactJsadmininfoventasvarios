@@ -31,9 +31,11 @@ export default function Dashboard() {
   const [user, setUser] = useState({});
   const [countsClients, setCountsClients] = useState({});
   const [countsOrders, setCountsOrders] = useState({});
-  const history = useHistory()
+  const history = useHistory();
   const token = window.localStorage.getItem("token");
   useEffect(() => {
+    window.localStorage.removeItem("data");
+    window.localStorage.removeItem("imgs");
     axios
       .get("/auth/profile", {
         headers: {
@@ -42,17 +44,27 @@ export default function Dashboard() {
       })
       .then((e) => {
         setUser(e.data);
-        toast.success(`Hola ${e.data.first_name}`,{autoClose:1500});
-      }).catch((e)=>{
-        if(e.request&&e.response){
-          if(e.request.status && e.response.data){
-            if(e.request.status===401 && e.response.data.message ==="Unauthenticated."){
-              window.localStorage.clear();
-              window.sessionStorage.clear();
-              history.go(0);
-            }
+        toast.success(`Hola ${e.data.first_name}`, { autoClose: 1500 });
+      })
+      .catch((e) => {
+        setTimeout(() => {
+          let get = parseInt(window.localStorage.getItem("reset"));
+          if (get < 4) {
+            get = get + 1;
+            console.log(get);
+            console.log(window.localStorage.getItem("reset"));
+            window.localStorage.reset = "" + get;
+            history.go(0);
+          } else {
+            toast.error("No pudimos conectarnos al servidor", {
+              autoClose: false,
+            });
+            window.localStorage.clear();
+            window.localStorage.setItem("reset", "0");
+
+            history.go(0);
           }
-        }
+        }, 10000);
       });
 
     axios
@@ -60,7 +72,7 @@ export default function Dashboard() {
       .then((e) => {
         setCountsClients(e.data);
       });
-      axios
+    axios
       .get("/orders/count", { headers: { Authorization: `Bearer ${token}` } })
       .then((e) => {
         setCountsOrders(e.data);
@@ -71,16 +83,24 @@ export default function Dashboard() {
   if (Object.keys(user).length !== 0) {
     return (
       <>
-        <Nav/>
+        <Nav />
         <Bar />
         <div className="page">
           {user.permits.orders ? (
-            <Card title="Pedidos" path="/orders" text={`${countsOrders.total??0}`} />
+            <Card
+              title="Pedidos"
+              path="/orders"
+              text={`${countsOrders.total ?? 0}`}
+            />
           ) : (
             ""
           )}
           {user.permits.clients ? (
-            <Card title="Clientes" path="/clients" text={`${countsClients.total??0}`} />
+            <Card
+              title="Clientes"
+              path="/clients"
+              text={`${countsClients.total ?? 0}`}
+            />
           ) : (
             ""
           )}
@@ -112,9 +132,12 @@ export default function Dashboard() {
       </>
     );
   } else {
-    return <><Nav/>
-    <Bar />
-      <Loading/>
-  </>
+    return (
+      <>
+        <Nav />
+        <Bar />
+        <Loading />
+      </>
+    );
   }
 }

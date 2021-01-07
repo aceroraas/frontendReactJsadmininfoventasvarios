@@ -101,7 +101,7 @@
 }
 .Toastify__toast--default {
   background: #fff;
-  color: #aaa;
+  color: black;
 }
 .Toastify__toast--info {
   background: #266f94;
@@ -181,18 +181,10 @@
   transform-origin: right;
 }
 .Toastify__progress-bar--default {
-  background: linear-gradient(
-    90deg,
-    #ec6f18,
-    #266f94
-  );
+  background:    #266f94;
 }
 .Toastify__progress-bar--dark {
-  background: linear-gradient(
-    90deg,
-    #ec6f18,
-    #266f94
-  );
+  background: #ec6f18;
 }
 @keyframes Toastify__bounceInRight {
   0%,

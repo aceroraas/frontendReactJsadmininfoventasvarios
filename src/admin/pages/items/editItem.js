@@ -1,36 +1,37 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { useHistory, useParams, withRouter } from "react-router-dom";
+import { Link, useHistory, useParams, withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import Bar from "../../componente/bar/bar";
 import Goback from "../../componente/goback/goback";
 import Nav from "../../componente/nav/nav";
 import "./items.css";
 const CardItem = ({ props }) => {
+  useEffect(() => {
+    window.localStorage.setItem("data", JSON.stringify(props.item));
+    window.localStorage.setItem("imgs", JSON.stringify(props.Uimgs));
+  }, [props]);
+  const { id } = useParams();
   let img = props.imgPrincipal;
   return (
     <>
       <div className="base-card-item">
-        <a href="#a">
+        <Link to={`/items/preview/${id}`} target="_blank">
           <div className="card-item-all">
             <div className="base-card-img">
               <img src={img} alt={props.item.title} />
             </div>
             <div className="card-item-title">
-              <a href="#a">
-                <h4>{props.item.title}</h4>
-              </a>
+              <h4>{props.item.title}</h4>
             </div>
             <div className="card-item-brand">
-              <a href="#a" style={{ color: "black" }}>
-                <h4>{props.item.brand}</h4>
-              </a>
+              <h4>{props.item.brand}</h4>
             </div>
             <div className="card-item-price">
-              <p>$ {props.item.price}</p>
+              <p>$ {parseFloat(props.item.price).toFixed(2)}</p>
             </div>
           </div>
-        </a>
+        </Link>
       </div>
     </>
   );
@@ -79,7 +80,6 @@ function SelectFamily({ id_sub }) {
               })}
             </select>
           </label>
-          {/* <MategoryM setTer={setCategories} /> */}
         </div>
       </>
     );
@@ -217,7 +217,7 @@ function SelectCategory() {
 //#####################################################################################################
 //#####################################################################################################
 
-function CardImg({ id_target, setTer, saveImg, allimg }) {
+function CardImg({ id_target, setTer, saveImg, allimg, Uimgs, setUImgs }) {
   return (
     <>
       <div
@@ -259,6 +259,26 @@ function CardImg({ id_target, setTer, saveImg, allimg }) {
                   if (setTer) {
                     setTer(e.target.result);
                   }
+                  switch (id_target) {
+                    case "iImgP":
+                      setUImgs({ ...Uimgs, img_one: e.target.result });
+                      break;
+                    case "iImgS":
+                      setUImgs({ ...Uimgs, img_two: e.target.result });
+                      break;
+                    case "iImgT":
+                      setUImgs({ ...Uimgs, img_tree: e.target.result });
+                      break;
+                    case "iImgF":
+                      setUImgs({ ...Uimgs, img_four: e.target.result });
+                      break;
+                    default:
+                      toast.info(
+                        "Disculpe Tenemos problemas al cargar ese archivo"
+                      );
+                      break;
+                  }
+
                   preview.style.backgroundImage = `url('${e.target.result}')`;
                 };
               } else {
@@ -282,7 +302,7 @@ function CardImg({ id_target, setTer, saveImg, allimg }) {
 //#####################################################################################################
 //#####################################################################################################
 //#####################################################################################################
-function SelectImg({ setTer, saveImg, allimg }) {
+function SelectImg({ setTer, saveImg, allimg, Uimgs, setUImgs }) {
   return (
     <>
       <CardImg
@@ -290,10 +310,30 @@ function SelectImg({ setTer, saveImg, allimg }) {
         setTer={setTer}
         saveImg={saveImg}
         allimg={allimg}
+        setUImgs={setUImgs}
+        Uimgs={Uimgs}
       />
-      <CardImg id_target={"iImgS"} saveImg={saveImg} allimg={allimg} />
-      <CardImg id_target={"iImgT"} saveImg={saveImg} allimg={allimg} />
-      <CardImg id_target={"iImgF"} saveImg={saveImg} allimg={allimg} />
+      <CardImg
+        id_target={"iImgS"}
+        saveImg={saveImg}
+        allimg={allimg}
+        setUImgs={setUImgs}
+        Uimgs={Uimgs}
+      />
+      <CardImg
+        id_target={"iImgT"}
+        saveImg={saveImg}
+        allimg={allimg}
+        setUImgs={setUImgs}
+        Uimgs={Uimgs}
+      />
+      <CardImg
+        id_target={"iImgF"}
+        saveImg={saveImg}
+        allimg={allimg}
+        setUImgs={setUImgs}
+        Uimgs={Uimgs}
+      />
     </>
   );
 }
@@ -311,6 +351,7 @@ function EditItem() {
   const [oldimg, setOlimg] = useState({});
   const [imgPrincipal, setImgPrincipal] = useState({});
   const [imgs, setImgs] = useState({});
+  const [Uimgs, setUImgs] = useState({});
   const [properties, setProperties] = useState({});
   // eslint-disable-next-line
   const [categories, setCategories] = useState([]);
@@ -474,11 +515,13 @@ function EditItem() {
               <label>
                 Precio:
                 <input
+                  min="0"
+                  step="0.01"
                   id="iPrice"
                   type="number"
                   onInput={(e) => {
                     e.preventDefault();
-                    setItem({ ...item, price: parseFloat(e.target.value) });
+                    setItem({ ...item, price: e.target.value });
                   }}
                   defaultValue={item.price}
                 ></input>
@@ -488,6 +531,7 @@ function EditItem() {
               <label>
                 Stock:
                 <input
+                  min="0"
                   id="iStock"
                   type="number"
                   onInput={(e) => {
@@ -528,13 +572,18 @@ function EditItem() {
             </div>
             <SelectCategory />
           </div>
-          <SelectImg setTer={setImgPrincipal} saveImg={setImgs} allimg={imgs} />
-       
+          <SelectImg
+            setTer={setImgPrincipal}
+            saveImg={setImgs}
+            allimg={imgs}
+            setUImgs={setUImgs} 
+            Uimgs={Uimgs}
+          />
         </div>
         <div className="base-edit-right">
           <div className="card-background">
             {Object.keys(item).length !== 0 ? (
-              <CardItem props={{ item, imgPrincipal }} />
+              <CardItem props={{ item, imgPrincipal, Uimgs }} />
             ) : (
               <h2>Cargando Vista Previa</h2>
             )}

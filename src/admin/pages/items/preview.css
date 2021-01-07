@@ -1,0 +1,232 @@
+.base-items {
+  width: 99%;
+  margin: 0px;
+  padding: 0px;
+}
+.main {
+  width: 100%;
+}
+
+.base-imgs {
+  float: left;
+  width: calc(50% - 5px);
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+}
+
+.base-details-s {
+  float: right;
+  width: calc(50% - 5px);
+  height: 10vh;
+  margin: 0px;
+  padding: 0px;
+}
+.base-caption {
+  clear: both;
+  width: 100%;
+  height: auto;
+  margin: 0px;
+  padding: 0;
+}
+
+.card-imgs-pre {
+  margin-left: 4%;
+  margin-right: auto;
+  width: calc(100% - 10px);
+  height: 85vh;
+  padding: 10px;
+}
+.card-details-pre {
+  margin-left: auto;
+  margin-right: auto;
+  width: calc(80%);
+  height: 85vh;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 0px black;
+}
+.card-caption-pre {
+  width: calc(100% - 10px);
+  padding: 10px;
+  height: 80vh;
+  border-radius: 10px;
+}
+
+.card-imgs-pre .b-load {
+  transform: translateY(50%) !important;
+}
+
+.imagen-principal {
+  width: 100%;
+  height: 80%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.imagen-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  box-shadow: 0px 0px 10px 0px gray;
+  transition: 200ms ease-in-out;
+}
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: 0px 0px 0px 0px gray;
+}
+.tumbnails {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 200px;
+}
+.tumbnails button {
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: transparent;
+  border: 1px solid #17abc3;
+  outline: none;
+}
+.tumbnails button:active {
+  border: 1px solid #ec6f18;
+}
+
+.base-Informacion {
+  text-align: center;
+  margin-left: 10px;
+  overflow: hidden;
+  width: 99%;
+  height: 99%;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.Titulo {
+  width: 99%;
+  height: 200px;
+  max-height: 200px;
+  text-align: left;
+}
+.Titulo h1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  color: #266f94;
+  font-weight: 800;
+  font-size: 38px;
+}
+
+.marca {
+  font-weight: 800;
+  font-size: 20px;
+  color: #ec6f18;
+  text-align: left;
+  text-transform: uppercase;
+}
+.marca h2 {
+  text-transform: initial;
+  font-size: 25px;
+  color: #266f94;
+}
+
+.precio-unidad {
+  text-transform: uppercase;
+  margin-top: 2%;
+  font-weight: 800;
+  font-size: 20px;
+  color: #ec6f18;
+  text-align: left;
+}
+
+.precio-unidad h3 {
+  text-transform: initial;
+  font-size: 30px;
+  color: #266f94;
+}
+.cantidad {
+  font-weight: 800;
+  font-size: 20px;
+  color: #ec6f18;
+  text-align: left;
+  margin-top: 2%;
+}
+.cantidad input {
+  border-radius: 10px;
+  border: 1px solid;
+  width: 70px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: initial;
+}
+
+.precio-total {
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-top: 2%;
+  font-size: 30px;
+  color: #ec6f18;
+}
+.button-price {
+  margin-top: 5px;
+}
+.button-price button {
+  background-color: #ec6f18;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  font-weight: 800;
+}
+@media all and (max-width: 800px) {
+  .card-imgs-pre {
+    height: 90vh;
+  }
+  .card-details-pre {
+    height: 100vh;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .base-details-s {
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    float: none;
+    height: 100%;
+  }
+  .base-imgs {
+    margin-bottom: 50px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 90%;
+    float: none;
+    height: 100%;
+  }
+  .base-caption {
+    clear: none;
+    margin-left: 0;
+    margin-right: 0;
+    width: 90%;
+    height: 100%;
+    float: none;
+  }
+}

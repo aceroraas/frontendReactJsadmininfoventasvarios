@@ -155,9 +155,8 @@
   font-size: 1rem;
   font-weight: 800;
   text-transform: uppercase;
-
 }
-.inputs input[id=iTitle]{
+.inputs input[id="iTitle"] {
   width: 450px !important;
 }
 .inputs input {
@@ -257,7 +256,6 @@
   background-size: cover;
 }
 
-
 .img-card label {
   width: 100%;
   height: 100%;
@@ -268,7 +266,7 @@
   margin-top: 31%;
 }
 
-.properties .colors{
+.properties .colors {
   width: 30px;
   height: 30px;
   border: none;
@@ -289,9 +287,9 @@
   z-index: -1;
 }
 
-
-.properties{
+.properties {
   color: #ec6f18;
   font-weight: 800;
   text-transform: uppercase;
 }
+

@@ -11,11 +11,15 @@ import { toast } from "react-toastify";
 
 const CardItem = ({ props }) => {
   let img = JSON.parse(props.url_images).img_one;
+  let stylenostock = {
+    backgroundColor: "#c4c4c4",
+    color: "red",
+  };
   return (
     <>
       <div className="base-card-item">
         <Link to={`items/edit/${props.id}`}>
-          <div className="card-item-all">
+          <div className="card-item-all" style={props.stock===0?stylenostock:{}}>
             <div className="base-card-img">
               <img src={img} alt={props.title} />
             </div>
@@ -23,7 +27,7 @@ const CardItem = ({ props }) => {
               <h4>{props.title}</h4>
             </div>
             <div className="card-item-price">
-              <p>$ {props.price}</p>
+              <p>$ {parseFloat(props.price).toFixed(2)}</p>
             </div>
           </div>
         </Link>
@@ -128,6 +132,7 @@ function Items() {
                   </option>
                 );
               })}
+              <option value="nostock">SIN STOCK</option>
             </select>
           </div>
           <div className="search-btn">

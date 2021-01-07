@@ -16,9 +16,9 @@ function Nav() {
       setRate(e.data.rates);
       setMoneda(e.data.national_currency_symbol);
     });
-    window.setTimeout(()=>{
-      window.scrollTo(0,0);
-    },100);
+    window.setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
   }, []);
   return (
     <div className="nav-base">
@@ -26,38 +26,48 @@ function Nav() {
         <div className="nav-base-logo">
           <Link to="/inicio">
             <img
+              loading="lazy"
               className="nav-logo"
               src={logo}
-              height="62"
+              height="62px"
+              width="320px"
               alt="imagotipo de infoventas varios"
             />
           </Link>
         </div>
       </div>
       <div className="nav-base-right">
-        {user.permits?user.permits.rates ? (
-          <div className="nav-base-input">
-            <p>TASA:</p>
-            <input
-              value={rate}
-              onInput={(e) => {
-                setRate(e.target.value)
-                axios.post(
-                  "/conf/rates",
-                  { rates: e.target.value },
-                  { headers: { Authorization: `Bearer ${token}` } }
-                ).then((e)=>{
-                  toast.success('💵 la tasa ha sido ' + e.data.response,{autoClose:1500});
-                });
-              }}
-              type="number"
-              id='navrates'
-            ></input>
-            <p>{moneda}</p>
-          </div>
+        {user.permits ? (
+          user.permits.rates ? (
+            <div className="nav-base-input">
+              <p>TASA:</p>
+              <input
+                value={rate}
+                onInput={(e) => {
+                  setRate(e.target.value);
+                  axios
+                    .post(
+                      "/conf/rates",
+                      { rates: e.target.value },
+                      { headers: { Authorization: `Bearer ${token}` } }
+                    )
+                    .then((e) => {
+                      toast.success("💵 la tasa ha sido " + e.data.response, {
+                        autoClose: 1500,
+                      });
+                    });
+                }}
+                type="number"
+                id="navrates"
+              ></input>
+              <p>{moneda}</p>
+            </div>
+          ) : (
+            ""
+          )
         ) : (
           ""
-        ):''}
+        )}
         <div className="nav-base-cargo">
           <div className="nav-icon-cargo">
             <Icargo />
