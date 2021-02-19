@@ -82,7 +82,7 @@ function NewUser() {
       <Nav position={user.position} userName={user.user_name} />
       <Bar />
         <Goback history={history} />
-      <div className="base-users">
+      <div className="base">
       </div>
       <div className="base-update">
         <div className="columns">

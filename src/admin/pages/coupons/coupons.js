@@ -6,7 +6,7 @@ import Nav from "../../componente/nav/nav";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Axios from "axios";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 const AxiosConfig = {
   headers: { Authorization: `Bearer ${window.localStorage.getItem("token")}` },
 };
@@ -31,31 +31,28 @@ function sendandgetcoupons(data) {
   toast.info("creando cupon");
   Axios.post("coupons/create", data, AxiosConfig)
     .then(() => {
-      const el=document.querySelector('.maintable');
+      const el = document.querySelector(".maintable");
       ReactDOM.unmountComponentAtNode(el);
-      ReactDOM.render(<TableCoupons/>,el);
+      ReactDOM.render(<TableCoupons />, el);
       toast.success("cupon " + data.code + " creado");
     })
     .catch((e) => {
-      if(e.response && e.response.status){
-        if(e.response.status === 400){
-          if(e.response.data){
-            if(e.response.data.code){
+      if (e.response && e.response.status) {
+        if (e.response.status === 400) {
+          if (e.response.data) {
+            if (e.response.data.code) {
               toast.warning("El cupon ya existe");
+            } else if (e.response.data.expire) {
+              toast.warning("la fecha de expiración es importante");
+            } else if (e.response.data.discount) {
+              toast.warning("el valor de descuento es importante");
             }
-            else if(e.response.data.expire){
-              toast.warning('la fecha de expiración es importante');
-            }else if(e.response.data.discount){
-              toast.warning('el valor de descuento es importante');
-
-            }
-
           }
         }
-        if(e.response.status === 401){
+        if (e.response.status === 401) {
           toast.warning("Usted No tiene permisos para realizar esta accion");
         }
-      }else{
+      } else {
         toast.error("ha ocurrido un error");
       }
     });
@@ -80,8 +77,10 @@ function deletecoupons(id, setTer) {
 function DetailsCoupon() {
   const usuario = useRef();
   const articulo = useRef();
+  const brand = useRef();
   const categoria = useRef();
   const [itemsdata, setItemsData] = useState([]);
+  const [itemsBrands, setBrands] = useState([]);
   const [userdata, setUserData] = useState([]);
   const [selectCategory, setSelectCategory] = useState([]);
   const [selectSubCategory, setSelectSubCategory] = useState([]);
@@ -95,6 +94,11 @@ function DetailsCoupon() {
   useEffect(() => {
     Axios.get("aitems/all", AxiosConfig).then((e) => {
       setItemsData(e.data);
+    });
+  }, []);
+  useEffect(() => {
+    Axios.get("aitems/brands", AxiosConfig).then((e) => {
+      setBrands(e.data);
     });
   }, []);
 
@@ -157,6 +161,41 @@ function DetailsCoupon() {
 
   useEffect(() => {
     let indexfocus = -1;
+
+    function autoBrand(data) {
+      const inputbrand = document.getElementById("brand");
+      inputbrand.addEventListener("input", () => {
+        const nid = inputbrand.value;
+        if (!nid) return false;
+        closeList();
+        const branddiv = document.createElement("div");
+        branddiv.setAttribute("id", inputbrand.id + "-lbrand");
+        branddiv.setAttribute("class", "listAutoItems");
+        inputbrand.parentNode.appendChild(branddiv);
+
+        if (data.length === 0) return false;
+
+        data.forEach((el) => {
+          if (el.brand !== null) {
+            if (el.brand.substr(0, nid.length) === nid) {
+              const list = document.createElement("div");
+              list.innerHTML = `<strong>${el.brand.substr(
+                0,
+                nid.length
+              )}</strong>${el.brand.substr(nid.length)}`;
+              list.setAttribute("id", el.brand);
+              list.addEventListener("click", () => {
+                inputbrand.value = list.id;
+                closeList();
+                return false;
+              });
+              branddiv.appendChild(list);
+            }
+          }
+        });
+      });
+    }
+
     function autoUser(data) {
       const inputuser = document.getElementById("idUser");
       inputuser.addEventListener("input", () => {
@@ -316,6 +355,7 @@ function DetailsCoupon() {
 
     autoUser(userdata);
     autoItems(itemsdata);
+    autoBrand(itemsBrands);
   }, [userdata, itemsdata]);
   return (
     <>
@@ -332,6 +372,7 @@ function DetailsCoupon() {
                   usuario.current.style.display = "block";
                   categoria.current.style.display = "none";
                   articulo.current.style.display = "none";
+                  brand.current.style.display = "none";
                 }
               }}
             />
@@ -348,6 +389,7 @@ function DetailsCoupon() {
                   articulo.current.style.display = "block";
                   usuario.current.style.display = "none";
                   categoria.current.style.display = "none";
+                  brand.current.style.display = "none";
                 }
               }}
             />
@@ -364,10 +406,28 @@ function DetailsCoupon() {
                   categoria.current.style.display = "block";
                   usuario.current.style.display = "none";
                   articulo.current.style.display = "none";
+                  brand.current.style.display = "none";
                 }
               }}
             />
             <label>CATEGORIA</label>
+          </div>
+          <div className="cinput">
+            <input
+              type="radio"
+              name="checktype"
+              id="rbrand"
+              value="brand"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  categoria.current.style.display = "none";
+                  usuario.current.style.display = "none";
+                  articulo.current.style.display = "none";
+                  brand.current.style.display = "block";
+                }
+              }}
+            />
+            <label>Marca</label>
           </div>
           <div className="cinput">
             <input
@@ -381,6 +441,7 @@ function DetailsCoupon() {
                   categoria.current.style.display = "none";
                   usuario.current.style.display = "none";
                   articulo.current.style.display = "none";
+                  brand.current.style.display = "none";
                 }
               }}
             />
@@ -388,7 +449,7 @@ function DetailsCoupon() {
           </div>
         </div>
         <hr />
-        <div className="couponinputs inputs">
+        <div className="couponinputs inputs" style={{ textAlign: "left" }}>
           <div className="cinput">
             <div ref={usuario} className="cinput" style={{ display: "none" }}>
               <label>
@@ -397,6 +458,17 @@ function DetailsCoupon() {
               </label>
               <div className="autocomplete">
                 <input id="idUser" autoComplete="off" type="text" />
+              </div>
+            </div>
+          </div>
+          <div className="cinput">
+            <div ref={brand} className="cinput" style={{ display: "none" }}>
+              <label>
+                Marca:
+                <br />
+              </label>
+              <div className="autocomplete">
+                <input id="brand" autoComplete="off" type="text" />
               </div>
             </div>
           </div>
@@ -495,25 +567,32 @@ function TableCoupons() {
                       {e.userid ? `Usuario: ${e.userid}` : ""}
                       {e.itemid ? `Producto: ${e.itemid}` : ""}
                       {e.categorytype
-                        ? e.categorytype==='category'? `Categoria: ${e.categoryid}`
-                        :e.categorytype==='subcategory'?  `Sub-Categoria: ${e.categoryid}`:e.categorytype==='family'? `Familia: ${e.categoryid}`:'':''}
+                        ? e.categorytype === "category"
+                          ? `Categoria: ${e.categoryid}`
+                          : e.categorytype === "subcategory"
+                          ? `Sub-Categoria: ${e.categoryid}`
+                          : e.categorytype === "family"
+                          ? `Familia: ${e.categoryid}`
+                          : ""
+                        : ""}
                       {e.itemid
                         ? ""
                         : e.userid
                         ? ""
                         : e.categorytype
                         ? ""
-                        : "Cupon General"}
+                        : ""}
+                        {e.brand?`Marca: ${e.brand}`:''}
                     </td>
                     <td>
                       <button
-                      style={{
-                        backgroundColor:'red',
-                        border:' none',
-                        padding: '4px 10px',
-                        borderRadius: '5px',
-                        margin:'4px'
-                    }}
+                        style={{
+                          backgroundColor: "red",
+                          border: " none",
+                          padding: "4px 10px",
+                          borderRadius: "5px",
+                          margin: "4px",
+                        }}
                         className="text-white"
                         onClick={(e) => {
                           deletecoupons(id, setTable);
@@ -545,8 +624,8 @@ function Coupons() {
         <DetailsCoupon />
         <center>
           <button
-          className='secundary text-white'
-          style={{border:'none',borderRadius:'10px', padding:'10px'}}
+            className="secundary text-white"
+            style={{ border: "none", borderRadius: "10px", padding: "10px" }}
             onClick={(e) => {
               e.preventDefault();
               const Icode = document.getElementById("icode");
@@ -587,6 +666,10 @@ function Coupons() {
                     sendandgetcoupons(dataSend);
 
                     break;
+                  case "brand":
+                    dataSend.brand = document.getElementById(check).value;
+                    sendandgetcoupons(dataSend);
+                    break;
 
                   case "idcategorytype":
                     dataSend.categorytype = document.getElementById(
@@ -611,8 +694,8 @@ function Coupons() {
           </button>
         </center>
         <hr />
-        <div className='maintable'>
-        <TableCoupons />
+        <div className="maintable">
+          <TableCoupons />
         </div>
       </div>
     </>

@@ -27,7 +27,7 @@ function LoadOrders() {
   }, [token]);
   return (
     <>
-      <div className="base-orders">
+      <div className="base">
         <table className="table-users">
           <thead>
             <tr>
@@ -120,7 +120,7 @@ function Orders() {
     <>
       <Nav />
       <Bar />
-      <Goback history={history} />
+      <Goback/>
       <LoadOrders />
     </>
   );

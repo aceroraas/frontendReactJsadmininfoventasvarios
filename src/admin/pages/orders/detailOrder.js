@@ -506,7 +506,7 @@ function DetailItemsOfCard({ items }) {
 
   return (
     <>
-      <div className="base-orders">
+      <div className="base">
         <table className="table-users">
           <thead>
             <tr>
@@ -629,7 +629,7 @@ function DetailOrders() {
       <>
         <Nav />
         <Bar />
-        <Goback history={history} />
+        <Goback/>
         <DetailClient props={client} />
         <DetailOrder order={order} rate={items.rate ?? ""} />
         <DetailItemsOfCard items={items} />

@@ -85,7 +85,7 @@ export default function Dashboard() {
       <>
         <Nav />
         <Bar />
-        <div className="page">
+        <div className="base">
           {user.permits.orders ? (
             <Card
               title="Pedidos"

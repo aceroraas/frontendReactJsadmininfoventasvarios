@@ -1,0 +1,125 @@
+.main-buscador {
+  width: 100%;
+  height: 40px;
+}
+
+.buscador {
+  width: 90%;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.buscador-input {
+  width: 200px;
+  transition: 400ms ease-in-out;
+}
+.boton-buscar {
+  cursor: pointer;
+  height: 35px;
+  width: 60px;
+  background-color: #266f94;
+  border-radius: 0px 10px 10px 0px;
+  display: inline-block;
+  transition: 200ms ease-in-out;
+  padding: 2px 5px;
+}
+.boton-buscar svg {
+  margin-top: 9%;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  width: 25px;
+  height: 25px;
+}
+
+.boton-buscar:active {
+  padding: 1px 5px;
+}
+
+.buscador-input:focus {
+  width: 80%;
+  border: solid 1px;
+  border-radius: 10px 0px 0px 10px;
+}
+.buscador-input:focus ~ .boton-buscar {
+  background-color: #ec6f18;
+}
+
+.main-resultados {
+  padding: 20px;
+}
+
+.module {
+  background-color: #E6E3E3;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  max-height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px -1px gray;
+}
+.icon-module {
+  border-radius: 10px 0px 0px 10px;
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  background-color: #266f94;
+  text-align: center;
+}
+.icon-module svg {
+  transform: translateY(45%);
+  color: #fff;
+  width: 50px;
+  height: 50px;
+}
+
+.body-module {
+  background-color: #d8d3d3a4;
+  height: 100px;
+  border-radius: 10px;
+}
+.body-module h5 {
+  transform: translateY(20px);
+  color: #ec6f18;
+  font-weight: 800;
+}
+.body-module p {
+  transform: translateY(20px);
+  color: #266f94;
+  font-weight: 800;
+}
+
+.contain {
+  display: block;
+  width: 100%;
+  height: auto;
+  background-color: #E6E3E3;
+  border-radius: 0px 0px 10px 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.hidden *{
+  display: none ;
+}
+
+.contain div {
+  cursor: pointer;
+  color: #266f94;
+  font-weight: 800;
+  height: 20px;
+  padding: 10px;
+  border: solid 1px 0px 1px 0px gray;
+}
+.contain div:hover {
+  background-color: #266f94;
+  color: #fff !important;
+}
+
+.contain ~ .module::before{
+  width: auto;
+}

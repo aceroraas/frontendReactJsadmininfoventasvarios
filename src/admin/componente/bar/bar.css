@@ -1,9 +1,11 @@
 .bar-base{
     width: 70px;
     background-color: #266f94;
-    height: 400vh;
+    height: calc(300vh);
     display: flex;
     float: left;
+    transition: 700ms ease-in-out;
+
     overflow: hidden;
 }
 .bar-icons{
@@ -20,3 +22,15 @@
 a:active svg{
     color: #ec6f18;
 }
+
+@media all and (max-width: 544px) {
+    .bar-base{
+      width: 18px;
+    }
+    .bar-icons a, .bar-icons svg{
+        margin-left: 2%;
+        height: 20px;
+        width: 17px;
+    }
+  }
+  

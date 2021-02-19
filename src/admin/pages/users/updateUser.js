@@ -420,7 +420,7 @@ function UpdateUsers() {
       <Nav />
       <Bar />
         <Goback history={history} />
-      <div className="base-users">
+      <div className="base">
         {userUpdate.response ? (
           <ErrorMessage error={userUpdate} />
         ) : (

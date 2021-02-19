@@ -24,6 +24,8 @@ import Money from "./admin/pages/settings/setting-money";
 import F404 from "./admin/componente/404/404";
 import Sfile from "./admin/pages/settings/setting-file";
 import preview from "./admin/pages/items/preview";
+import search from "./admin/pages/settings/search";
+import positions from "./admin/pages/settings/positions";
 //axios.defaults.baseURL = "https://api.infoventasvarios.com.ve/api/beta";
 axios.defaults.baseURL = "http://api.localhost/api/beta";
 const isAuth = () => {
@@ -62,6 +64,8 @@ function App() {
           <MyRoute exact path="/clients" component={clients} />
           <MyRoute exact path="/orders/:id" component={detailOrder} />
           <MyRoute exact path="/orders" component={orders} />
+          <MyRoute exact path="/search" component={search} />
+          <MyRoute exact path="/settings-position" component={positions} />
           <MyRoute exact path="/settings-users/new" component={NewUser} />
           <MyRoute path="/settings-users/:id" component={UpdateUser} />
           <MyRoute exact path="/settings-users" component={Users} />

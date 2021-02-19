@@ -906,3 +906,15 @@ template {
 [hidden] {
   display: none;
 }
+
+.base{
+  margin-left: 70px;
+  width: calc(100% -70px);
+}
+
+@media all and (max-width: 600px) {
+  .base{
+    margin-left: 8px !important;
+    width: calc(100% - 8px) !important;
+  }
+}

@@ -21,7 +21,7 @@ function Users() {
       <Nav />
       <Bar />
       <Goback />
-      <div className="base-users">
+      <div className="base">
         <div className="btn-create-user">
           <Link to="/settings-users/new">CREAR USUARIO</Link>
         </div>

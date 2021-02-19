@@ -93,7 +93,7 @@ function Sfile() {
       <Nav />
       <Bar />
       <Goback />
-      <div className="base-sett">
+      <div className="base">
         <div className="subba">
           <div className="ba">
             <a href={link}>

@@ -9,7 +9,7 @@ function Bar(){
     return (<>
     <div className="bar-base">
         <div className='bar-icons'>
-            <div className='icon-exit'><NavLink to='#search'><Isearch /></NavLink></div>
+            <div className='icon-exit'><NavLink to='/search'><Isearch /></NavLink></div>
             {user.permits?user.permits.users?<div className='icon-exit'><NavLink to='/settings'><Isettings /></NavLink></div>:"":''}
            <div className='icon-exit'><NavLink to='/logout'><Iexit /></NavLink></div>
         </div>

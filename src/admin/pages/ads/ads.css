@@ -1,6 +1,5 @@
 .base {
   margin-left: 72px;
-  width: calc(99% - 72px);
 }
 
 .base-ads {
@@ -18,13 +17,16 @@
   background-color: #266f94;
   padding: 8px 10px;
 }
-
+.swiper-container{
+  z-index: -1 !important;
+}
+.swiper-slide{
+  width: 100% !important;
+  
+}
 .base-preview {
   width: 100%;
-  height: auto;
-  border: #ec6f18 solid 2px;
-  padding: 0;
-  margin: 0;
+  height: 480px;
 }
 
 .base-preview .img {
@@ -35,94 +37,22 @@
   background-size: cover;
   background-clip: content-box;
   background-repeat: no-repeat;
-  background-image: url("http://via.placeholder.com/1257x480");
-  transition: 300ms ease-in-out;
 }
 
-.base-preview .text {
-  display: block;
-  position: relative;
-  height: 100%;
-  max-height: 480px;
-  width: 50%;
-  left: calc(50% - 5px);
-  text-transform: uppercase;
-  transition: 200ms ease-in-out;
-}
-
-.base-preview .text .container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  max-height: 480px;
-  transition: 300ms ease-in-out;
-}
-.text h1,
-h2,
-h3,
-p {
-  margin: 0;
-  padding: 0;
-}
-.text h1 {
-  font-size: 90px;
-  font-weight: 900;
-  transition: 300ms ease-in-out;
-}
-.text h2 {
-  font-size: 24px;
-  font-weight: 700;
-  transition: 300ms ease-in-out;
-}
-
-.text .caption {
-  font-size: 25px;
-  font-weight: 700;
-  transition: 300ms ease-in-out;
-}
-.title,
-.subtitle {
-  text-align: center;
-  position: relative;
-  top: 6%;
-}
-.caption {
-  text-align: center;
-  position: relative;
-  top: 8%;
-}
-.boton {
-  text-align: center;
-  position: relative;
-  top: 13%;
-  transition: 300ms ease-in-out;
-  margin-top: 1%;
-}
-
-.boton a {
-  border-radius: 10px;
-  color: white;
-  padding: 5px 10px;
-}
 .boton a:active {
   border-radius: 10px;
   color: white;
   padding: 2px 10px;
 }
 
-
-.inputs input[type=color]{
-    width: 25px;
-    height: 25px;
-    margin: 5px;
-    padding: 0;
-    border: none;
-    outline: none;
+.inputs input[type="text"] {
+  width: 300px;
 }
-.inputs input[type=file]{
-    border: none;
-    outline: none;
+.inputs input[type="file"] {
+  border: none;
+  outline: none;
+  width: 300px;
 }
-.inputs label{
-margin-left: 10px;
+.inputs label {
+  margin-left: 10px;
 }

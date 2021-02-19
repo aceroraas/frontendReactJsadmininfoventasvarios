@@ -23,4 +23,8 @@
     height: 32px;
     transform: rotate(180deg);
   }
-  
+  @media all and (max-width: 600px) {
+    .base-goback{
+      margin-left: 7px;
+    }
+  }

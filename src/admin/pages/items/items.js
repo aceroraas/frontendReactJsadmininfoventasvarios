@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NewItem from "./newItem";
 import { toast } from "react-toastify";
+import Loading from "../../componente/load/loading";
 
 const CardItem = ({ props }) => {
   let img = JSON.parse(props.url_images).img_one;
@@ -19,9 +20,12 @@ const CardItem = ({ props }) => {
     <>
       <div className="base-card-item">
         <Link to={`items/edit/${props.id}`}>
-          <div className="card-item-all" style={props.stock===0?stylenostock:{}}>
+          <div
+            className="card-item-all"
+            style={props.stock === 0 ? stylenostock : {}}
+          >
             <div className="base-card-img">
-              <img src={img} alt={props.title} />
+              <img loading="lazy" src={img} alt={props.title} />
             </div>
             <div className="card-item-title">
               <h4>{props.title}</h4>
@@ -180,14 +184,15 @@ function Items() {
         <hr />
       </div>
       <div className="base-page-item">
-        {show ? <NewItem /> : ""}
+        {show ? <NewItem /> :
+        searchitems.length===0?<Loading/>:""}
         {searchitems?.map((e) => {
           return (
             <div key={e.id}>
-              <CardItem key={e.id} props={e} />
+            <CardItem key={e.id} props={e} />
             </div>
-          );
-        })}
+            );
+          })}
       </div>
     </>
   );

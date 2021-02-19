@@ -14,7 +14,7 @@ function Profile() {
     <>
       <Nav />
       <Bar />
-      <div className="base-profile">
+      <div className="base">
       <Goback history={history} />
         <div className="base-profile-data">
           <div className="profile-h3">

@@ -29,7 +29,7 @@ function Money() {
       <Nav />
       <Bar />
       <Goback />
-      <div className="base-sett">
+      <div className="base">
         <div className="inputs">
           <table>
             <thead>

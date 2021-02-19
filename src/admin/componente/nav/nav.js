@@ -22,66 +22,70 @@ function Nav() {
   }, []);
   return (
     <div className="nav-base">
-      <div className="nav-base-left">
-        <div className="nav-base-logo">
-          <Link to="/inicio">
-            <img
-              loading="lazy"
-              className="nav-logo"
-              src={logo}
-              height="62px"
-              width="320px"
-              alt="imagotipo de infoventas varios"
-            />
-          </Link>
+      <div className="nav-control">
+        <div className="nav-base-left">
+          <div className="nav-base-logo">
+            <Link to="/inicio">
+              <img
+                loading="lazy"
+                className="nav-logo"
+                src={logo}
+                height="62px"
+                width="320px"
+                alt="imagotipo de infoventas varios"
+              />
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="nav-base-right">
-        {user.permits ? (
-          user.permits.rates ? (
-            <div className="nav-base-input">
-              <p>TASA:</p>
-              <input
-                value={rate}
-                onInput={(e) => {
-                  setRate(e.target.value);
-                  axios
-                    .post(
-                      "/conf/rates",
-                      { rates: e.target.value },
-                      { headers: { Authorization: `Bearer ${token}` } }
-                    )
-                    .then((e) => {
-                      toast.success("💵 la tasa ha sido " + e.data.response, {
-                        autoClose: 1500,
+        <div className="nav-base-right">
+          {user.permits ? (
+            user.permits.rates ? (
+              <div className="nav-base-input">
+                <p>TASA:</p>
+                <input
+                  value={rate}
+                  onInput={(e) => {
+                    setRate(e.target.value);
+                    axios
+                      .post(
+                        "/conf/rates",
+                        { rates: e.target.value },
+                        { headers: { Authorization: `Bearer ${token}` } }
+                      )
+                      .then((e) => {
+                        toast.success("💵 la tasa ha sido " + e.data.response, {
+                          autoClose: 1500,
+                        });
                       });
-                    });
-                }}
-                type="number"
-                id="navrates"
-              ></input>
-              <p>{moneda}</p>
-            </div>
+                  }}
+                  type="number"
+                  id="navrates"
+                ></input>
+                <p>{moneda}</p>
+              </div>
+            ) : (
+              ""
+            )
           ) : (
             ""
-          )
-        ) : (
-          ""
-        )}
-        <div className="nav-base-cargo">
-          <div className="nav-icon-cargo">
-            <Icargo />
-          </div>
-          <p>{user.position}</p>
-        </div>
-        <NavLink to="/profile">
-          <div className="nav-base-usuario">
-            <div className="nav-icon-usuario">
-              <Iusuario />
+          )}
+          <div className="nav-info">
+            <div className="nav-base-cargo">
+              <div className="nav-icon-cargo">
+                <Icargo />
+              </div>
+              <p>{user.position}</p>
             </div>
-            <p>{user.user_name}</p>
+            <NavLink to="/profile">
+              <div className="nav-base-usuario">
+                <div className="nav-icon-usuario">
+                  <Iusuario />
+                </div>
+                <p>{user.user_name}</p>
+              </div>
+            </NavLink>
           </div>
-        </NavLink>
+        </div>
       </div>
     </div>
   );
