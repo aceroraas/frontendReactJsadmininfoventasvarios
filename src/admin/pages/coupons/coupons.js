@@ -593,7 +593,7 @@ function TableCoupons() {
                           borderRadius: "5px",
                           margin: "4px",
                         }}
-                        className="text-white"
+                        className="text-white btn red"
                         onClick={(e) => {
                           deletecoupons(id, setTable);
                         }}

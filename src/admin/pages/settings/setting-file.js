@@ -41,8 +41,8 @@ function Catalogos({ data, seTer }) {
                     <td>{new Date(e.updated_at).toLocaleString()}</td>
                     <td>
                       <Link
-                      className='btn red'
-                      style={{color:'white'}}
+                        className="btn red"
+                        style={{ color: "white" }}
                         to="#"
                         onClick={(e) => {
                           e.preventDefault();
@@ -51,10 +51,12 @@ function Catalogos({ data, seTer }) {
                               headers: { Authorization: `Bearer ${token}` },
                             })
                             .then((e) => {
-                             seTer(e.data);
+                              seTer(e.data);
                             });
                         }}
-                      >Eliminar</Link>
+                      >
+                        Eliminar
+                      </Link>
                     </td>
                   </tr>
                 );
@@ -77,17 +79,17 @@ function Sfile() {
   const h2 = useRef();
   const h3 = useRef();
   const [list, setList] = useState([]);
-  const token = window.localStorage.getItem("token");
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
   const cancelToken = axios.CancelToken;
   const source = cancelToken.source();
-  const [link,setLink] =useState();
+  const [link, setLink] = useState();
   const history = useHistory();
 
-  useEffect(()=>{
-    axios.get('catalogo/download').then((e)=>{
+  useEffect(() => {
+    axios.get("catalogo/download").then((e) => {
       setLink(e.data.link);
-    })
-  },[]);
+    });
+  }, []);
   return (
     <>
       <Nav />
@@ -175,7 +177,7 @@ function Sfile() {
                 h2.current.style.color = "green";
               })
               .catch((e) => {
-                history.go(0)
+                history.go(0);
               });
           }
         }}

@@ -8,6 +8,7 @@ import Nav from "../../componente/nav/nav";
 import { ReactComponent as Iusuario } from "../../../media/icons/user-astronaut-solid.svg";
 import "./clients.css";
 import { Modal, ModalTransition, useModal } from "react-simple-hook-modal";
+import Loading from "../../componente/load/loading";
 
 const ConfirmDelete = ({ props }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -16,9 +17,9 @@ const ConfirmDelete = ({ props }) => {
 
   return (
     <>
-      <Link className="red" onClick={openModal}>
+      <button className="red btn text-white" onClick={openModal}>
         eliminar
-      </Link>
+      </button>
       <Modal isOpen={isModalOpen} transition={ModalTransition.BOTTOM_UP}>
         <div className="modal-body">
           <div className="modal-title">
@@ -57,12 +58,11 @@ const ConfirmDelete = ({ props }) => {
           <br />
           <br />
           <div className="modal-btn">
-            <Link className="red" to="#exit" onClick={closeModal}>
+            <button className="red btn text-white"  onClick={closeModal}>
               Salir
-            </Link>
-            <Link
-              className="secundary"
-              to="#deletePermanent"
+            </button>
+            <button
+              className="secundary btn text-white"
               onClick={(e) => {
                 toast.info("💥 solicitando Destrución de la cuenta");
                 setTimeout((e) => {
@@ -76,15 +76,13 @@ const ConfirmDelete = ({ props }) => {
                   .then((e) => {
                     toast.success("👍 se ha eliminado de manera permanente");
                     history.push("/clients");
-
                   });
               }}
             >
               Eliminar Permanente
-            </Link>
-            <Link
-              className="primary"
-              to="#delete"
+            </button>
+            <button
+              className="primary btn text-white"
               onClick={(e) => {
                 toast.info("✌️ solicitando Eliminación de la cuenta");
                 setTimeout(toast.info("🦾 Ejecutando Eliminación"), 3000);
@@ -100,7 +98,7 @@ const ConfirmDelete = ({ props }) => {
               }}
             >
               Eliminar
-            </Link>
+            </button>
           </div>
         </div>
       </Modal>
@@ -114,9 +112,9 @@ const ConfirmDisable = ({ props }) => {
 
   return (
     <>
-      <Link className="gray" to="#suspender" onClick={openModal}>
+      <button className="gray btn text-white" onClick={openModal}>
         {props.account_enabled ? "suspender" : "habilitar"}
-      </Link>
+      </button>
       <Modal
         id="any-unique-identifier"
         isOpen={isModalOpen}
@@ -157,12 +155,11 @@ const ConfirmDisable = ({ props }) => {
           <br />
           <br />
           <div className="modal-btn">
-            <Link className="red" to="#a" onClick={closeModal}>
+            <button className="red btn text-white" onClick={closeModal}>
               Salir
-            </Link>
-            <Link
-              className="primary"
-              to="#a"
+            </button>
+            <button
+              className="primary btn text-white"
               onClick={(e) => {
                 toast.info(
                   `✌️ solicitando ${
@@ -188,7 +185,7 @@ const ConfirmDisable = ({ props }) => {
               }}
             >
               {props.account_enabled ? "suspender" : "habilitar"}
-            </Link>
+            </button>
           </div>
         </div>
       </Modal>
@@ -196,13 +193,12 @@ const ConfirmDisable = ({ props }) => {
   );
 };
 
-
 function DataClient({ client }) {
   const { id } = useParams();
 
   return (
     <>
-      <div className="base-client">
+      <div className="base">
         <div className="base-client-top">
           <div className="base-client-letf">
             <div className="client-info">
@@ -266,7 +262,10 @@ function DataClient({ client }) {
                 </div>
               </div>
               <div className="client-buttons">
-                <Link className="primary text-white" to="/orders/order/user/1">
+                <Link
+                  className="primary btn text-white"
+                  to={`/orders/order/user/${client.id}`}
+                >
                   Historial de Transapciones
                 </Link>
               </div>
@@ -278,14 +277,14 @@ function DataClient({ client }) {
           <div className="client-buttons">
             <ConfirmDelete props={client} />
             <ConfirmDisable props={client} />
-            <Link className="secundary" to="/coupons/user/1">
+            <Link className="secundary btn text-white" to={`/coupons/user/${client.id}`}>
               descuento
             </Link>
-            <Link to={`/clients/edit/${id}`}>editar</Link>
+            <Link className="btn text-white" to={`/clients/edit/${id}`}>editar</Link>
           </div>
           <hr />
 
-          <div className="client-tablet">
+          {/*  <div className="client-tablet">
             <center>
               <table>
                 <thead>
@@ -304,7 +303,7 @@ function DataClient({ client }) {
                 </tbody>
               </table>
             </center>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
@@ -312,9 +311,8 @@ function DataClient({ client }) {
 }
 
 function ClientsView() {
-  const token = window.localStorage.getItem("token");
-  const history = useHistory();
-  const [dclient, setDclient] = useState({});
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [dclient, setDclient] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     toast.info("🧐 Buscando datos", { autoClose: 2500 });
@@ -367,12 +365,8 @@ function ClientsView() {
     <>
       <Nav />
       <Bar />
-      <Goback history={history} />
-      {Object.keys(dclient).length !== 0 ? (
-        <DataClient client={dclient} />
-      ) : (
-        <h1 id="info-page">Cargando datos</h1>
-      )}
+      <Goback />
+      {dclient ? <DataClient client={dclient} /> : <Loading />}
     </>
   );
 }

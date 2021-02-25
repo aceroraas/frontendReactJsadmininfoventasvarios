@@ -2,13 +2,13 @@ import React from "react";
 
 import "./login.css";
 import imagotipo from "../../../media/logos/imagotipo.svg";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { ReactComponent as Ipassword } from "../../../media/icons/key-solid.svg";
 import { ReactComponent as Iuser } from "../../../media/icons/user-astronaut-solid.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function checkLogin(e) {
+function checkLogin(e, history) {
   e.preventDefault();
   toast.info("Verificando");
   let btn = document.getElementsByClassName("input-btn");
@@ -17,21 +17,17 @@ function checkLogin(e) {
   btn[0].children[0].text = "Verificando...";
   btn[0].children[0].style.backgroundColor = "#ec6f18";
   let data = {
-    user: inputUser.value,
+    user_name: inputUser.value,
     password: inputPass.value,
   };
   axios
-    .post("/auth/login", {
-      user_name: data.user,
-      password: data.password,
-    })
+    .post("/auth/login", data)
     .then((response) => {
-      btn[0].children[0].text = "EXCELENTE...";
-      btn[0].children[0].style.backgroundColor = "#266f94";
-
-      window.localStorage.token = response.data.token;
-      window.localStorage.permits = JSON.stringify(response.data.permits);
-      window.localStorage.expire = response.data.token_expire;
+      let time = new Date();
+      time.setSeconds(response.data.token_expire*1000);
+      window.localStorage.setItem("expire",  time.getHours());
+      btn[0].children[0].innerText = "EXCELENTE";
+      window.localStorage.setItem("token", response.data.token);
       window.location = "/inicio";
     })
     .catch((e) => {
@@ -57,7 +53,7 @@ function checkLogin(e) {
         if (e.response.data.message) {
           toast.warning(e.response.data.message);
         }
-        if(e.response.data.response){
+        if (e.response.data.response) {
           toast.warning(e.response.data.response);
         }
         toast.warning(
@@ -128,9 +124,15 @@ function Login() {
             </div>
           </div>
           <div className="input-btn">
-            <Link to="#a" onClick={checkLogin}>
+            <button
+              className="btn primary text-white"
+              onClick={(e) => {
+                checkLogin(e);
+                e.target.innerText = "VERIFICANDO";
+              }}
+            >
               INICIAR SESIÓN
-            </Link>
+            </button>
           </div>
         </div>
       </div>

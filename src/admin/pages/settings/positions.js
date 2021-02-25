@@ -26,12 +26,20 @@ function ListPositions() {
       <div className="seliminarp">
         <select id="seliminar">
           {listp?.map((e) => {
-            return <option key={e.id} value={e.id}>{e.name}</option>;
+            return (
+              <option key={e.id} value={e.id}>
+                {e.name}
+              </option>
+            );
           })}
         </select>
-        <div id="btneliminarp" style={{cursor:'pointer'}}  className="btn red text-white">
+        <button
+          id="btneliminarp"
+          style={{ cursor: "pointer" }}
+          className="btn red text-white"
+        >
           Eliminar
-        </div>
+        </button>
       </div>
     </>
   );
@@ -48,7 +56,7 @@ async function deleteP(id, seter) {
     });
 }
 
-async function save(data,history) {
+async function save(data, history) {
   await Axios.post(`/positions/new`, data, AxiosConfig)
     .then(() => {
       toast.success("se ha Guardado con exito");
@@ -71,21 +79,21 @@ async function geter(seter) {
 }
 
 function CreateP() {
-    const history= useHistory();
-    useEffect(()=>{
-        const btnup= document.getElementById('btnpositionnew');
-        const inputp= document.getElementById('position');
-        btnup.addEventListener('click',(e)=>{
-            e.preventDefault();
-            if(inputp.value.length>1){
-                let data={
-                    name: inputp.value
-                }
-                toast.info('enviando datos');
-                save(data,history);
-            }
-        });
-    },[]);
+  const history = useHistory();
+  useEffect(() => {
+    const btnup = document.getElementById("btnpositionnew");
+    const inputp = document.getElementById("position");
+    btnup.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (inputp.value.length > 1) {
+        let data = {
+          name: inputp.value,
+        };
+        toast.info("enviando datos");
+        save(data, history);
+      }
+    });
+  }, []);
   return (
     <>
       <div>
@@ -95,7 +103,13 @@ function CreateP() {
           placeholder="Escriba el nombre del puesto"
           id="position"
         />
-        <div id='btnpositionnew'style={{cursor:'pointer'}} className="btn secundary text-white">Crear</div>
+        <button
+          id="btnpositionnew"
+          style={{ cursor: "pointer" }}
+          className="btn secundary text-white"
+        >
+          Crear
+        </button>
       </div>
     </>
   );

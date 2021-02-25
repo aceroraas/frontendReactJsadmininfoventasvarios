@@ -7,13 +7,15 @@ import Goback from "../../componente/goback/goback";
 import Nav from "../../componente/nav/nav";
 import { ReactComponent as Iusuario } from "../../../media/icons/user-astronaut-solid.svg";
 import "./clients.css";
+import Loading from "../../componente/load/loading";
 
 function DataEditClient({ client }) {
-  const token = window.localStorage.getItem("token");
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+
   const [data, setData] = useState(client);
   return (
     <>
-      <div className="base-client">
+      <div className="base">
         <div className="base-client-top">
           <div className="base-client-letf">
             <div className="client-info">
@@ -30,7 +32,6 @@ function DataEditClient({ client }) {
                         size={client.first_name?.length > 30 ?? 30}
                         defaultValue={client.first_name}
                         onInput={(e) => {
-                          e.preventDefault();
                           setData({ ...data, first_name: e.target.value });
                         }}
                       />
@@ -40,7 +41,6 @@ function DataEditClient({ client }) {
                         size={client.second_name?.length > 30 ?? 30}
                         defaultValue={client.second_name}
                         onInput={(e) => {
-                          e.preventDefault();
                           setData({ ...data, second_name: e.target.value });
                         }}
                       />
@@ -56,7 +56,6 @@ function DataEditClient({ client }) {
                         size={client.national_id > 11 ?? 12}
                         defaultValue={client.national_id}
                         onInput={(e) => {
-                          e.preventDefault();
                           setData({ ...data, national_id: e.target.value });
                         }}
                       />
@@ -74,7 +73,6 @@ function DataEditClient({ client }) {
                         defaultValue={client.number_phone}
                         size="16"
                         onInput={(e) => {
-                          e.preventDefault();
                           setData({ ...data, number_phone: e.target.value });
                         }}
                       />
@@ -93,7 +91,6 @@ function DataEditClient({ client }) {
                         size={client.location?.length}
                         defaultValue={client.location}
                         onInput={(e) => {
-                          e.preventDefault();
                           setData({ ...data, location: e.target.value });
                         }}
                       />
@@ -112,7 +109,6 @@ function DataEditClient({ client }) {
                           client.date_of_birth_or_celebration_company
                         }
                         onInput={(e) => {
-                          e.preventDefault();
                           setData({
                             ...data,
                             date_of_birth_or_celebration_company:
@@ -123,27 +119,26 @@ function DataEditClient({ client }) {
                     </td>
                   </tr>
                   <tr>
-                  <td className="text-primary">
-                      <br/>
+                    <td className="text-primary">
+                      <br />
                       Tipo de Cuenta:
                     </td>
-                    <td className='client-buttons'>
-                    <br/>
-                      <Link className='primary text-white'
+                    <td className="client-buttons">
+                      <br />
+                      <button
+                        className="primary text-white"
                         onClick={(e) => {
-                          e.preventDefault();
                           let a = !client.account_type;
                           console.log(a);
-                          client.account_type= a;
+                          client.account_type = a;
                           setData({
                             ...data,
-                            account_type: a
+                            account_type: a,
                           });
                         }}
-                        to="#type"
                       >
                         {client.account_type ? "Empresa" : "Persona"}
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 </thead>
@@ -164,17 +159,16 @@ function DataEditClient({ client }) {
           <Link
             className="secundary text-white "
             onClick={(e) => {
-                e.preventDefault();
-                toast.info("✍️ Modificando");
-                let a = {data};
-                console.log(a.data);
+              e.preventDefault();
+              toast.info("✍️ Modificando");
+              let a = { data };
+              console.log(a.data);
               axios
-                .put("/clients/update",a.data, {
+                .put("/clients/update", a.data, {
                   headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((e) => {
                   toast.success("👍 Actualizado Exitosamente");
-                  //window.location = `/clients/edit/${id}`;
                 });
             }}
             to="#e"
@@ -188,7 +182,8 @@ function DataEditClient({ client }) {
 }
 
 function EditClient() {
-  const token = window.localStorage.getItem("token");
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+
   const history = useHistory();
   const [dclient, setDclient] = useState({});
   const { id } = useParams();
@@ -244,11 +239,11 @@ function EditClient() {
     <>
       <Nav />
       <Bar />
-      <Goback history={history} />
+      <Goback />
       {Object.keys(dclient).length !== 0 ? (
         <DataEditClient client={dclient} />
       ) : (
-        <h1 id="info-page">Cargando datos</h1>
+        <Loading />
       )}
     </>
   );

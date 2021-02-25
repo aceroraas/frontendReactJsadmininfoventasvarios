@@ -42,15 +42,14 @@
   width: 150px;
 }
 
-.btn{
-  padding: 8px 10px !important;
-  margin-left: 70px;
-  text-align: center;  
+#btnpositionnew ,#btneliminarp {
+  margin-left: 10px;
 }
 
 .basetable{
   overflow-x: auto;
   width: 90%;
+  height: auto;
 }
 .catalogo-table{
   width: 100%;
@@ -60,9 +59,12 @@
 }
 .catalogo-table th, .catalogo-table td{
   border: solid 1px black;
+  height: 40px;
+  text-align: center;
+  padding: 6px;
 }
 .catalogo-table th{  
   background-color: #ec6f18;
   color: white;
-  padding: 5px;
+  padding: 10px;
 }

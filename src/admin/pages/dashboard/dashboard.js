@@ -28,45 +28,47 @@ const Card = ({ title, path, Icon, text }) => {
 };
 
 export default function Dashboard() {
-  const [user, setUser] = useState({});
-  const [countsClients, setCountsClients] = useState({});
-  const [countsOrders, setCountsOrders] = useState({});
+  const [user, setUser] = useState(false);
+  const [countsClients, setCountsClients] = useState(false);
+  const [countsOrders, setCountsOrders] = useState(false);
   const history = useHistory();
-  const token = window.localStorage.getItem("token");
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
   useEffect(() => {
-    window.localStorage.removeItem("data");
-    window.localStorage.removeItem("imgs");
-    axios
-      .get("/auth/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((e) => {
-        setUser(e.data);
-        toast.success(`Hola ${e.data.first_name}`, { autoClose: 1500 });
-      })
-      .catch((e) => {
-        setTimeout(() => {
-          let get = parseInt(window.localStorage.getItem("reset"));
-          if (get < 4) {
-            get = get + 1;
-            console.log(get);
-            console.log(window.localStorage.getItem("reset"));
-            window.localStorage.reset = "" + get;
-            history.go(0);
-          } else {
-            toast.error("No pudimos conectarnos al servidor", {
-              autoClose: false,
-            });
-            window.localStorage.clear();
-            window.localStorage.setItem("reset", "0");
+    if (window.localStorage.getItem("user")) {
+      setUser(JSON.parse(window.localStorage.getItem("user")));
+    } else {
+      axios
+        .get("/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((e) => {
+          setUser(e.data);
+          window.localStorage.setItem("user", JSON.stringify(e.data));
+          toast.success(`Hola ${e.data.first_name}`, { autoClose: 1500 });
+        })
+        .catch((e) => {
+          setTimeout(() => {
+            let get = parseInt(window.localStorage.getItem("reset"));
+            if (get < 4) {
+              get = get + 1;
+              console.log(get);
+              console.log(window.localStorage.getItem("reset"));
+              window.localStorage.reset = "" + get;
+              history.go(0);
+            } else {
+              toast.error("No pudimos conectarnos al servidor", {
+                autoClose: false,
+              });
+              window.localStorage.removeItem("user");
+              window.localStorage.setItem("reset", "0");
 
-            history.go(0);
-          }
-        }, 10000);
-      });
-
+              history.go(0);
+            }
+          }, 5000);
+        });
+    }
     axios
       .get("/clients/count", { headers: { Authorization: `Bearer ${token}` } })
       .then((e) => {
@@ -77,16 +79,15 @@ export default function Dashboard() {
       .then((e) => {
         setCountsOrders(e.data);
       });
-  }, [token]);
-  window.localStorage.setItem("user", JSON.stringify(user));
+  }, [token, history]);
 
-  if (Object.keys(user).length !== 0) {
-    return (
-      <>
-        <Nav />
-        <Bar />
+  return (
+    <>
+      <Nav />
+      <Bar />
+      {user ? (
         <div className="base">
-          {user.permits.orders ? (
+          {user.permits?.orders ? (
             <Card
               title="Pedidos"
               path="/orders"
@@ -95,7 +96,7 @@ export default function Dashboard() {
           ) : (
             ""
           )}
-          {user.permits.clients ? (
+          {user.permits?.clients ? (
             <Card
               title="Clientes"
               path="/clients"
@@ -104,22 +105,22 @@ export default function Dashboard() {
           ) : (
             ""
           )}
-          {user.permits.coupons ? (
+          {user.permits?.coupons ? (
             <Card title="Cupones" path="/coupons" Icon={Icoupon} />
           ) : (
             ""
           )}
-          {user.permits.items ? (
+          {user.permits?.items ? (
             <Card title="Productos" path="/items" Icon={Iitems} />
           ) : (
             ""
           )}
-          {user.permits.ads ? (
+          {user.permits?.ads ? (
             <Card title="Anuncios" path="/ads" Icon={Iads} />
           ) : (
             ""
           )}
-          {user.permits.users ? (
+          {user.permits?.users ? (
             <Card
               title="Usuarios del sistema"
               path="/settings-users"
@@ -129,15 +130,9 @@ export default function Dashboard() {
             ""
           )}
         </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Nav />
-        <Bar />
+      ) : (
         <Loading />
-      </>
-    );
-  }
+      )}
+    </>
+  );
 }

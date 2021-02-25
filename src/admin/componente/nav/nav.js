@@ -10,12 +10,23 @@ function Nav() {
   const token = window.localStorage.getItem("token");
   const [moneda, setMoneda] = useState("BS.S");
   const [rate, setRate] = useState(0.0);
-  const user = JSON.parse(window.localStorage.user);
+  const [user, setUser] = useState(
+    JSON.parse(window.localStorage.getItem("user"))
+  );
   useEffect(() => {
-    axios.get("/public/infomoney").then((e) => {
-      setRate(e.data.rates);
-      setMoneda(e.data.national_currency_symbol);
-    });
+    if (window.localStorage.infomoney) {
+      setRate(JSON.parse(window.localStorage.infomoney).rates);
+      setMoneda(
+        JSON.parse(window.localStorage.infomoney).national_currency_symbol
+      );
+    } else {
+      axios.get("/public/infomoney").then((e) => {
+        setRate(e.data.rates);
+        setMoneda(e.data.national_currency_symbol);
+        window.localStorage.setItem("infomoney", JSON.stringify(e.data));
+      });
+    }
+
     window.setTimeout(() => {
       window.scrollTo(0, 0);
     }, 100);
@@ -38,14 +49,28 @@ function Nav() {
           </div>
         </div>
         <div className="nav-base-right">
-          {user.permits ? (
-            user.permits.rates ? (
+          {user ? (
+            user.permits?.rates ? (
               <div className="nav-base-input">
                 <p>TASA:</p>
                 <input
                   value={rate}
                   onInput={(e) => {
                     setRate(e.target.value);
+                    if (window.localStorage.getItem("infomoney")) {
+                      let temp = JSON.parse(
+                        window.localStorage.getItem("infomoney")
+                      );
+                      temp.rates = e.target.value;
+                    } else {
+                      window.localStorage.setItem(
+                        "infomoney",
+                        JSON.stringify({
+                          rates: e.target.value,
+                          national_currency_symbol: moneda,
+                        })
+                      );
+                    }
                     axios
                       .post(
                         "/conf/rates",
@@ -74,14 +99,14 @@ function Nav() {
               <div className="nav-icon-cargo">
                 <Icargo />
               </div>
-              <p>{user.position}</p>
+              <p>{user?.position}</p>
             </div>
             <NavLink to="/profile">
               <div className="nav-base-usuario">
                 <div className="nav-icon-usuario">
                   <Iusuario />
                 </div>
-                <p>{user.user_name}</p>
+                <p>{user?.user_name}</p>
               </div>
             </NavLink>
           </div>

@@ -1,16 +1,34 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useHistory, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import Bar from "../../componente/bar/bar";
 import Goback from "../../componente/goback/goback";
 import Nav from "../../componente/nav/nav";
 import "./clients.css";
 import { ReactComponent as Isearch } from "../../../media/icons/search-solid.svg";
+import Loading from "../../componente/load/loading";
 
 function SearchClient({ setter }) {
-  const token = window.localStorage.getItem("token");
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
 
+  function buscarCliente(query) {
+    axios
+      .get(`/clients/query/${query}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((e) => {
+        if (e.data.length !== 0) {
+          toast.success("💪 Esto fue lo que encontre para ti");
+          setter(e.data);
+        } else {
+          toast.info("🤷‍♂️ no encontre nada");
+        }
+      })
+      .catch((er) => {
+        toast.info("🤷‍♂️ no encontre nada");
+      });
+  }
   return (
     <>
       <div className="base-search">
@@ -28,55 +46,24 @@ function SearchClient({ setter }) {
                       document.getElementById("clientQuery").value
                     }`
                   );
-                  e.preventDefault();
-                  let query = document.getElementById("clientQuery").value;
-                  axios
-                    .get(`/clients/query/${query}`, {
-                      headers: { Authorization: `Bearer ${token}` },
-                    })
-                    .then((e) => {
-                      if (e.data.length !== 0) {
-                        toast.success("💪 Esto fue lo que encontre para ti");
-                        setter(e.data);
-                      } else {
-                        toast.info("🤷‍♂️ no encontre nada");
-                      }
-                    })
-                    .catch((e) => {
-                      toast.info("🤷‍♂️ no encontre nada");
-                    });
+                  buscarCliente(e.target.value);
                 }
               }}
             ></input>
           </div>
           <div className="search-btn">
-            <a
-              href="#search"
+            <button
               onClick={(e) => {
                 toast.info(
                   `🧐 buscando ${document.getElementById("clientQuery").value}`
                 );
                 e.preventDefault();
                 let query = document.getElementById("clientQuery").value;
-                axios
-                  .get(`/clients/query/${query}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                  })
-                  .then((e) => {
-                    if (e.data.length !== 0) {
-                      toast.success("💪 Esto fue lo que encontre para ti");
-                      setter(e.data);
-                    } else {
-                      toast.info("🤷‍♂️ no encontre nada");
-                    }
-                  })
-                  .catch((e) => {
-                    toast.info("🤷‍♂️ no encontre nada");
-                  });
+                buscarCliente(query);
               }}
             >
               <Isearch />
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -87,72 +74,51 @@ function SearchClient({ setter }) {
 function TableClients({ props }) {
   return (
     <>
-      <center>
-        <table className="table-clients">
-          <thead>
-            <tr>
-              <th>
-                Correo
-                <hr />
-              </th>
-              <th>
-                Nombre
-                <hr />
-              </th>
-              <th>
-                Identificación
-                <hr />
-              </th>
-              <th>
-                Estatus de la cuenta
-                <hr />
-              </th>
-              <th>
-                Acción
-                <hr />
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {props?.map((e) => {
-              return (
-                <tr key={e.id}>
-                  <td>
-                    {e.email}
-                    <hr />
-                  </td>
-                  <td>
-                    {`${e.first_name} ${e.second_name}`}
-                    <hr />
-                  </td>
-                  <td>
-                    {e.national_id}
-                    <hr />
-                  </td>
-                  <td>
-                    {e.account_enabled ? "Habilitada" : "Suspendida"}
-                    <hr />
-                  </td>
-                  <td>
-                    <Link to={`/clients/${e.id}`}>VER</Link>
-                    <hr />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </center>
+      <div className="base-detail">
+        <div>
+          <table className="">
+            <thead>
+              <tr>
+                <th>Correo</th>
+                <th>Nombre</th>
+                <th>Identificación</th>
+                <th>Estatus de la cuenta</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props?.map((e) => {
+                return (
+                  <tr key={e.id}>
+                    <td>{e.email}</td>
+                    <td>{`${e.first_name} ${e.second_name}`}</td>
+                    <td>{e.national_id}</td>
+                    <td>{e.account_enabled ? "Habilitada" : "Suspendida"}</td>
+                    <td>
+                      <Link
+                        className="btn primary text-white"
+                        to={`/clients/${e.id}`}
+                      >
+                        VER
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }
 
 function Clients() {
-  const token = window.localStorage.getItem("token");
-  const history = useHistory();
-  const [clients, setClients] = useState([]);
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+
+  const [clients, setClients] = useState(false);
   useEffect(() => {
-    toast.info("😎 cargando clientes", { autoClose: 2500 });
+    toast.info("😎 cargando clientes");
     axios
       .get("/clients/all", { headers: { Authorization: `Bearer ${token}` } })
       .then((e) => {
@@ -191,15 +157,13 @@ function Clients() {
     <>
       <Nav />
       <Bar />
-      <Goback history={history} />
-      <div className="base-clients">
+      <Goback />
+      <div className="base">
         <SearchClient setter={setClients} />
-        {clients.length !== 0 ? (
+        {clients ? (
           <TableClients props={clients} />
         ) : (
-          <center>
-            <h2>No hay clientes :'C</h2>
-          </center>
+          <Loading />
         )}
       </div>
     </>

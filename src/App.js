@@ -26,8 +26,8 @@ import Sfile from "./admin/pages/settings/setting-file";
 import preview from "./admin/pages/items/preview";
 import search from "./admin/pages/settings/search";
 import positions from "./admin/pages/settings/positions";
-//axios.defaults.baseURL = "https://api.infoventasvarios.com.ve/api/beta";
-axios.defaults.baseURL = "http://api.localhost/api/beta";
+axios.defaults.baseURL = "https://api.infoventasvarios.com.ve/api/beta";
+//axios.defaults.baseURL = "http://api.localhost/api/beta";
 const isAuth = () => {
   let token = window.localStorage.getItem("token");
   let isValid = true;
@@ -45,7 +45,7 @@ const MyRoute = (props) => {
 
 const Logout = () => {
   axios.post("/auth/logout", { token: window.localStorage.token });
-  window.localStorage.removeItem("token");
+  window.localStorage.clear();
   return <Redirect to="/" />;
 };
 

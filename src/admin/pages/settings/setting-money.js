@@ -11,7 +11,7 @@ function Money() {
   const [confmoney, setConfmoney] = useState({});
   const [simbolo, setSimbolo] = useState(true);
   const history = useHistory();
-  const token = window.localStorage.getItem("token");
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
   useEffect(() => {
     axios
       .get("/conf/money", { headers: { Authorization: `Bearer ${token}` } })
@@ -86,16 +86,16 @@ function Money() {
                   <button
                     onClick={(e) => {
                       axios
-                      .post(
-                        "conf/symbol",
-                        { symbol: !simbolo },
-                        { headers: { Authorization: `Bearer ${token}` } }
+                        .post(
+                          "conf/symbol",
+                          { symbol: !simbolo },
+                          { headers: { Authorization: `Bearer ${token}` } }
                         )
                         .then(() => {
                           setSimbolo(!simbolo);
                         });
                     }}
-                    className="primary text-white"
+                    className="primary btn text-white"
                     style={{
                       border: "none",
                       borderRadius: "10px",
@@ -109,9 +109,8 @@ function Money() {
             </thead>
           </table>
           <br />
-          <Link
+          <button
             onClick={(e) => {
-              e.preventDefault();
               const data = {
                 iva1: document.getElementById("iva").value,
                 rates: document.getElementById("rate").value,
@@ -131,7 +130,7 @@ function Money() {
             className="btn secundary text-white"
           >
             APLICAR CAMBIOS
-          </Link>
+          </button>
         </div>
       </div>
     </>

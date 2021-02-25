@@ -1,30 +1,63 @@
-.base-client-top{
-height: 36vh !important;
+.base-client {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: 100%;
 }
-.img-div{
-   display: flex;
-   align-items: center;
-   padding: 0;
-   margin: 0;
-   width: auto;
+.base-detail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
 }
-.img-div p{
-    font-size: 1rem;
-    margin-left: 4px;
+.base-detail div {
+  order: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow-y: auto;
+  height: 100vh;
 }
 
-.img-div img{
- width: 80px;
- height: 50px;
+@media (max-width: 900px) {
+  .base-detail div {
+    align-items: flex-start;
+  }
+}
+.base-detail table {
+  overflow-x: auto;
+}
+.base-detail table th {
+  text-align: center;
+  padding: 20px 20px;
+}
+.base-detail table td {
+  text-align: center;
+  padding: 20px 20px;
+}
+.base-detail thead th {
+  color: white;
+  background-color: #ec6f18;
 }
 
-.btn{
-    display: inline-table;
-    margin: 3px;
-    width: 100px;
-    height: 10px;
-    padding: 0;
+button {
+  padding: 10px !important;
+  height: 40px !important;
+  width: 180px !important;
+  border: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  background-color: unset !important;
+  color: unset;
+  font-weight: 700;
+  cursor: pointer;
 }
-.table-users{
-    width: 90% !important;
+.green {
+  background-color: teal !important;
 }

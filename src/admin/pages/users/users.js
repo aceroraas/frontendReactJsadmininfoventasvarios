@@ -1,13 +1,14 @@
 import "./users.css";
-import { Link, useHistory, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Nav from "../../componente/nav/nav";
 import Bar from "../../componente/bar/bar";
 import Goback from "../../componente/goback/goback";
+import Loading from "../../componente/load/loading";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
 function Users() {
-  let [users, setUsers] = useState([]);
+  let [users, setUsers] = useState(false);
   useEffect(() => {
     const getAllUsers = axios.get("users/all", {
       headers: {
@@ -26,54 +27,38 @@ function Users() {
           <Link to="/settings-users/new">CREAR USUARIO</Link>
         </div>
         <hr />
-        <center>
-          <table className="table-users">
-            <thead>
-              <tr>
-                <th>
-                  Usuario
-                  <hr />
-                </th>
-                <th>
-                  Cargo
-                  <hr />
-                </th>
-                <th>
-                  Ultima Modificación
-                  <hr />
-                </th>
-                <th>
-                  Acción
-                  <hr />
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {users?.map((e) => {
-                return (
-                  <tr key={e.id}>
-                    <td>
-                      {e.user_name}
-                      <hr />
-                    </td>
-                    <td>
-                      {e.position}
-                      <hr />
-                    </td>
-                    <td>
-                      {new Date(e.updated_at).toLocaleString()}
-                      <hr />
-                    </td>
-                    <td>
-                      <Link to={`/settings-users/${e.id}`}>VER</Link>
-                      <hr />
-                    </td>
+        {users ? (
+          <div className="base-detail">
+            <div>
+              <table className="table-users">
+                <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Cargo</th>
+                    <th>Ultima Modificación</th>
+                    <th>Acción</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </center>
+                </thead>
+                <tbody>
+                  {users?.map((e) => {
+                    return (
+                      <tr key={e.id}>
+                        <td>{e.user_name}</td>
+                        <td>{e.position}</td>
+                        <td>{new Date(e.updated_at).toLocaleString()}</td>
+                        <td>
+                          <Link to={`/settings-users/${e.id}`}>VER</Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <Loading />
+        )}
       </div>
     </>
   );

@@ -7,6 +7,7 @@ import Nav from "../../componente/nav/nav";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loading from "../../componente/load/loading";
 
 function UserDatas({ userd, complements }) {
   const token = window.localStorage.getItem("token");
@@ -15,7 +16,9 @@ function UserDatas({ userd, complements }) {
   const UpdateUser = (e, data) => {
     const token = window.localStorage.getItem("token");
     e.preventDefault();
-    toast.info('✍️ ya estamos actualizando datos, por favor espere que se le confirme')
+    toast.info(
+      "✍️ ya estamos actualizando datos, por favor espere que se le confirme"
+    );
     axios
       .put(
         "/auth/update",
@@ -46,9 +49,13 @@ function UserDatas({ userd, complements }) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((e) => {
-        toast.info("el usuario ha sido eliminado",{autoClose:false});
+        toast.info("el usuario ha sido eliminado", { autoClose: false });
       })
-      .catch((e) => toast.error("no se ha podido elminar, intentelo mas tarde",{autoClose:false}));
+      .catch((e) =>
+        toast.error("no se ha podido elminar, intentelo mas tarde", {
+          autoClose: false,
+        })
+      );
   };
 
   const ifAllPermits = (e) => {
@@ -345,9 +352,7 @@ function UserDatas({ userd, complements }) {
   } else {
     return (
       <>
-        <center>
-          <h2>Cargando datos.</h2>
-        </center>
+        <Loading />
       </>
     );
   }
@@ -419,7 +424,7 @@ function UpdateUsers() {
     <>
       <Nav />
       <Bar />
-        <Goback history={history} />
+      <Goback />
       <div className="base">
         {userUpdate.response ? (
           <ErrorMessage error={userUpdate} />

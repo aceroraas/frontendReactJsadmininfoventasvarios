@@ -49,7 +49,7 @@ const searchItem = (e, setSearchItems, query, category, token) => {
     .then((e) => {
       setSearchItems(e.data);
       if (e.data.length === 0) {
-        toast.warning("🤧 No este producto en linea");
+        toast.warning("🤧 este producto no esta en linea");
       } else {
         toast("🧐 creo que encontre lo que buscabas");
       }
@@ -76,7 +76,6 @@ function Items() {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [searchitems, setSearchItems] = useState([]);
-  const history = useHistory();
   const token = window.localStorage.getItem("token");
   useEffect(() => {
     axios
@@ -89,7 +88,7 @@ function Items() {
     <>
       <Nav />
       <Bar />
-      <Goback history={history} />
+      <Goback />
       <div className="base-search">
         <div className="search">
           <div className="search-input">
@@ -140,8 +139,7 @@ function Items() {
             </select>
           </div>
           <div className="search-btn">
-            <a
-              href="#search"
+            <button
               onClick={(e) => {
                 let query = document.getElementById("query");
                 if (query.value.length > 0) {
@@ -166,11 +164,11 @@ function Items() {
               }}
             >
               <Isearch />
-            </a>
+            </button>
           </div>
           <div className="base-search-btn">
-            <a
-              href="#seeall"
+            <button
+              className="primary"
               onClick={(e) => {
                 setShow(false);
 
@@ -178,21 +176,20 @@ function Items() {
               }}
             >
               ver todos
-            </a>
+            </button>
           </div>
         </div>
         <hr />
       </div>
       <div className="base-page-item">
-        {show ? <NewItem /> :
-        searchitems.length===0?<Loading/>:""}
+        {show ? <NewItem /> : searchitems.length === 0 ? <Loading /> : ""}
         {searchitems?.map((e) => {
           return (
             <div key={e.id}>
-            <CardItem key={e.id} props={e} />
+              <CardItem key={e.id} props={e} />
             </div>
-            );
-          })}
+          );
+        })}
       </div>
     </>
   );
